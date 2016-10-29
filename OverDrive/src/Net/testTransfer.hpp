@@ -63,7 +63,7 @@ public:
 		CountingInputStream istr(stream);
 
 		//NullOutputStream ostr;
-		Poco::FileOutputStream ostr("C:\\Users\\Tausif\\Downloads\\" + fileName());
+		Poco::FileOutputStream ostr(fileName());
 		StreamCopier::copyStream(istr, ostr);
 		_length = istr.chars();
 	}

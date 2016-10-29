@@ -88,10 +88,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Tausif\Downloads\poco-1.7.6\poco-1.7.6\Foundation\include;C:\Users\Tausif\Downloads\poco-1.7.6\poco-1.7.6\JSON\include;C:\Users\Tausif\Downloads\poco-1.7.6\poco-1.7.6\Net\include;C:\Users\Tausif\Downloads\poco-1.7.6\poco-1.7.6\Util\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Poco\Foundation\include;$(ProjectDir)\Poco\JSON\include;$(ProjectDir)\Poco\Net\include;$(ProjectDir)\Poco\Util\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\Tausif\Downloads\poco-1.7.6\poco-1.7.6\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Poco\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>PocoFoundationd.lib;PocoNetd.lib;PocoUtild.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

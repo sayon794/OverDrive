@@ -12,6 +12,9 @@ namespace Net {
 		else if (strstr(request.getURI().c_str(), "/img/")) {
 			return new generalResourceHandler();
 		}
+		else if (strstr(request.getURI().c_str(), "/css/")) {
+			return new CSSHandler();
+		}
 		else if (request.getURI() == "/test") return new FormRequestHandler;
 		return new RootHandler();
 	}

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Filesystem\FileBrowser.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Net\Handlers.cpp" />
     <ClCompile Include="src\Net\OverdriveRequestHandlerFactory.cpp" />
     <ClCompile Include="src\Net\OverdriveServer.cpp" />
     <ClCompile Include="src\Net\RootHandler.cpp" />

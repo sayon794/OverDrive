@@ -19,6 +19,7 @@
 #include "Poco/Util/HelpFormatter.h"
 #include "Poco/FileStream.h"
 #include <iostream>
+#include <string>
 
 
 using Poco::Net::ServerSocket;
@@ -94,6 +95,22 @@ private:
 	std::string _name;
 	std::string _fileName;
 };
+class generalResourceHandler : public HTTPRequestHandler {
+public:
+	generalResourceHandler() {  }
+	void handleRequest(HTTPServerRequest& request, HTTPServerResponse& response) {
+		response.setChunkedTransferEncoding(true);
+		response.setContentType("Binary Data");
+
+		std::ostream& ostr = response.send();
+
+		char req[100];
+
+		strcpy(req, request.getURI().c_str());
+		Poco::FileInputStream istr(req + 1);
+		StreamCopier::copyStream(istr, ostr);
+	}
+};
 class myRequestHandler : public HTTPRequestHandler {
 public:
 	myRequestHandler() {}
@@ -101,7 +118,6 @@ public:
 		Application& app = Application::instance();
 		app.logger().information("Request from " + request.clientAddress().toString());
 
-		MyPartHandler partHandler;
 		HTMLForm form(request, request.stream());
 
 		response.setChunkedTransferEncoding(true);
@@ -110,7 +126,7 @@ public:
 		std::ostream& ostr = response.send();
 
 
-		Poco::FileInputStream istr("iWantItThatWay.mp3");
+		Poco::FileInputStream istr("data/logo.png");
 		StreamCopier::copyStream(istr, ostr);
 
 	}

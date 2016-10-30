@@ -9,7 +9,7 @@ namespace Net {
 		//if (request.getURI() == "/")
 		if (request.getURI() == "/hello") return new myRequestHandler;
 		//change this myRequestHandler when u remove testTransfer.hpp
-		else if (strstr(request.getURI().c_str(), "/data/")) {
+		else if (strstr(request.getURI().c_str(), "/img/")) {
 			return new generalResourceHandler();
 		}
 		else if (request.getURI() == "/test") return new FormRequestHandler;

@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Poco\Foundation\include;$(ProjectDir)\Poco\JSON\include;$(ProjectDir)\Poco\Net\include;$(ProjectDir)\Poco\Util\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src;$(ProjectDir)\Poco\Foundation\include;$(ProjectDir)\Poco\JSON\include;$(ProjectDir)\Poco\Net\include;$(ProjectDir)\Poco\Util\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)\Poco\lib</AdditionalLibraryDirectories>

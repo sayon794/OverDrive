@@ -1,7 +1,7 @@
 #include "RootHandler.hpp"
 #include "Poco/FileStream.h"
 #include "Poco/Exception.h"
-#include "../Filesystem/FileBrowser.hpp"
+#include "Filesystem/FileBrowser.hpp"
 #include <iostream>
 
 namespace Overdrive {

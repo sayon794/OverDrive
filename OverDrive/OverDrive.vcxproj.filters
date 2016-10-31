@@ -47,7 +47,7 @@
     <ClInclude Include="src\Filesystem\FileBrowser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Net\testTransfer.hpp">
+    <ClInclude Include="src\Net\Handlers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

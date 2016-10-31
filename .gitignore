@@ -50,6 +50,8 @@ $RECYCLE.BIN/
 *.la
 *.a
 *.lib
+*.exp
+*.idb
 
 # Executables
 *.exe

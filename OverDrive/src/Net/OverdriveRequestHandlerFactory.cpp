@@ -21,7 +21,13 @@ namespace Net {
 		else if (request.getURI().find("/css/") != std::string::npos) {
 			return new CSSHandler();
 		}
+		else if (request.getURI().find("/userAuthenticate") != std::string::npos) {
+			return new userAuthHandler();
+		}
 		else if (request.getURI() == "/test") return new FormRequestHandler;
+
+		else if (request.getURI() == "/login") return new LoginRequestHandler;
+
 		return new RootHandler();
 	}
 }

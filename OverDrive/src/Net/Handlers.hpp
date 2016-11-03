@@ -20,8 +20,28 @@
 #include "Poco/Util/OptionSet.h"
 #include "Poco/Util/HelpFormatter.h"
 #include "Poco/FileStream.h"
+#include "Filesystem\FileBrowser.hpp"
 #include <iostream>
 #include <string>
+
+using Poco::Net::ServerSocket;
+using Poco::Net::HTTPRequestHandler;
+using Poco::Net::HTTPRequestHandlerFactory;
+using Poco::Net::HTTPServer;
+using Poco::Net::HTTPServerRequest;
+using Poco::Net::HTTPServerResponse;
+using Poco::Net::HTTPServerParams;
+using Poco::Net::MessageHeader;
+using Poco::Net::HTMLForm;
+using Poco::Net::NameValueCollection;
+using Poco::Util::ServerApplication;
+using Poco::Util::Application;
+using Poco::Util::Option;
+using Poco::Util::OptionSet;
+using Poco::Util::HelpFormatter;
+using Poco::CountingInputStream;
+using Poco::NullOutputStream;
+using Poco::StreamCopier;
 
 namespace Overdrive {
 	namespace Net {
@@ -50,6 +70,29 @@ namespace Overdrive {
 			std::string _fileName;
 		};
 
+		class authPartHandler : public Poco::Net::PartHandler
+		{
+		public:
+			authPartHandler() :
+				_length(0)
+			{
+			}
+
+			void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream);
+			int length() const { return _length; }
+
+			const std::string& name() const { return _name; }
+
+			const std::string& fileName() const { return _fileName; }
+
+			const std::string& contentType() const { return _type; }
+
+		private:
+			int _length;
+			std::string _type;
+			std::string _name;
+			std::string _fileName;
+		};
 
 		class CSSHandler : public Poco::Net::HTTPRequestHandler {
 		public:
@@ -71,11 +114,26 @@ namespace Overdrive {
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 		};
 
+		class userAuthHandler : public Poco::Net::HTTPRequestHandler {
+		public:
+			userAuthHandler() {}
+			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		};
+
 		class FormRequestHandler : public Poco::Net::HTTPRequestHandler
 			/// Return a HTML document with the current date and time.
 		{
 		public:
 			FormRequestHandler() {}
+
+			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		};
+
+		class LoginRequestHandler : public Poco::Net::HTTPRequestHandler
+			/// Return a HTML document with the current date and time.
+		{
+		public:
+			LoginRequestHandler() {}
 
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 		};

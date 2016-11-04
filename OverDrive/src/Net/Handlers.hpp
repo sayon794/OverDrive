@@ -20,6 +20,7 @@
 #include "Poco/Util/OptionSet.h"
 #include "Poco/Util/HelpFormatter.h"
 #include "Poco/FileStream.h"
+#include "Poco/URI.h"
 #include "Filesystem\FileBrowser.hpp"
 #include <iostream>
 #include <string>

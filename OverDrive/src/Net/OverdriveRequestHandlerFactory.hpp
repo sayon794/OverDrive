@@ -4,6 +4,9 @@
 #include "Poco/Net/HTTPRequestHandler.h"
 #include "Poco/Net/HTTPServerRequest.h"
 #include "RootHandler.hpp"
+#include "DirectoryHandler.hpp"
+#include <string>
+#include <algorithm>
 
 namespace Overdrive {
 namespace Net {

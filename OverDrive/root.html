@@ -8,10 +8,10 @@
 	<meta property="og:url" content="">
 	<meta property="og:title" content="OverDrive - Local cloud storage">
 	<meta property="og:description" content="Local cloud storage for CSEDU labrooms">
-	<meta property="og:image" content="./img/favicon.png">
-	<link rel="icon" href="./img/favicon.png">
+	<meta property="og:image" content="/img/favicon.png">
+	<link rel="icon" href="/img/favicon.png">
 	<link rel="canonical" href="">
-	<link rel="stylesheet" href="./css/screen.css">
+	<link rel="stylesheet" href="/css/screen.css">
 
 
 	<!--file browser js-->
@@ -65,7 +65,8 @@
 		link.addEventListener("dragstart", onDragStart, false);
 		}
 		link.innerText = name;
-		link.href = root + url;
+		//link.href = root + url;
+		link.href = url;
 	}
 	file_cell.dataset.value = name;
 	file_cell.appendChild(link);
@@ -205,7 +206,7 @@
 					<div class="page-header-top">
 						<div class="container">
 							<div class="page-logo">
-								<a href=""><img class="logo-default" src="./img/logo.png" alt="OverDrive"></a>
+								<a href=""><img class="logo-default" src="/img/logo.png" alt="OverDrive"></a>
 							</div>
 
 							<div class="top-menu">
@@ -296,7 +297,7 @@
 					<div class="row">
 						<div class="col-sm-3">
 							<div class="logo-wrapper">
-								<img class="logo-default" src="./img/logo-w.png">
+								<img class="logo-default" src="/img/logo-w.png">
 							</div>
 						</div>
 
@@ -331,10 +332,10 @@
 	</script> 
 
 	<script>addRow("..","..",0,0,"0 B",0,"");</script>
-	<script>addRow("folder","folder",1, 0, "0 B", 0 , "");</script>
+	<!--<script>addRow("folder","folder",1, 0, "0 B", 0 , "");</script>
 	<script>addRow("file1","file1",0,71984,"70.3 kB",928346400,"6/3/99, 12:00:00 AM");</script>
 	<script>addRow("file2","file2",0,261195,"255 kB",928346400,"6/3/99, 12:00:00 AM");</script>
-	<script>addRow("file3","file3",0,260811,"255 kB",929383200,"6/15/99, 12:00:00 AM");</script>
+	<script>addRow("file3","file3",0,260811,"255 kB",929383200,"6/15/99, 12:00:00 AM");</script>-->
 
 
 

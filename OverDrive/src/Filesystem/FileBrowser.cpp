@@ -1,4 +1,5 @@
 #include "FileBrowser.hpp"
+#include <iostream>
 
 namespace Overdrive {
 namespace Filesystem {
@@ -11,6 +12,7 @@ namespace Filesystem {
 	FileBrowser::FileBrowser(const std::string &path) : currdir(path) {
 		Poco::File dir(currdir);
 		dir.list(dirlist);
+		//std::cout << Poco::Path::current() << std::endl;
 	}
 
 	std::string FileBrowser::createScript() {
@@ -25,7 +27,7 @@ namespace Filesystem {
 				
 			res += "<script>addRow(\"" + filename + "\", \"";
 			if (currdir == "") res += filename;
-			else res += currdir + "/" + filename;
+			else res += /*currdir + "/" +*/ filename;
 			res += "\", ";
 			if (file.isDirectory())
 				res += "1, ";

@@ -54,15 +54,19 @@ namespace Overdrive {
 		}
 
 		void generalResourceHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {
+			//std::cout << request.getURI() << std::endl;
 			response.setChunkedTransferEncoding(true);
 			response.setContentType("Binary Data");
 
 			std::ostream& ostr = response.send();
 
-			char req[100];
+			//char req[100];
 
-			strcpy(req, request.getURI().c_str());
-			Poco::FileInputStream istr(req + 1);
+			Poco::URI req(request.getURI());
+			//strcpy(req, request.getURI().c_str());
+			//Poco::FileInputStream istr(req + 1);
+			//std::cout << "Handlers.cpp" << req.getPath().substr(1, req.getPath().length() - 1) << std::endl;
+			Poco::FileInputStream istr(req.getPath().substr(1,req.getPath().length()-1));
 			Poco::StreamCopier::copyStream(istr, ostr);
 		}
 

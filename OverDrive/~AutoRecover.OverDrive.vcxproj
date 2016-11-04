@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Filesystem\FileBrowser.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Net\DirectoryHandler.cpp" />
     <ClCompile Include="src\Net\Handlers.cpp" />
     <ClCompile Include="src\Net\OverdriveRequestHandlerFactory.cpp" />
     <ClCompile Include="src\Net\OverdriveServer.cpp" />
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Filesystem\FileBrowser.hpp" />
+    <ClInclude Include="src\Net\DirectoryHandler.hpp" />
     <ClInclude Include="src\Net\OverdriveRequestHandlerFactory.hpp" />
     <ClInclude Include="src\Net\OverdriveServer.hpp" />
     <ClInclude Include="src\Net\RootHandler.hpp" />

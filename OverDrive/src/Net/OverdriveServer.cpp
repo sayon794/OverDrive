@@ -16,6 +16,7 @@ namespace Net {
 
 	int OverdriveServer::main(const std::vector<std::string>& args) {
 		Poco::Net::ServerSocket socket(9980);
+		
 		Poco::Net::HTTPServer server(new OverdriveRequestHandlerFactory(), socket,
 			new Poco::Net::HTTPServerParams);
 		server.start();

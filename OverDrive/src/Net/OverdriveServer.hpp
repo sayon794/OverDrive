@@ -9,6 +9,8 @@
 #include "Poco/Util/OptionSet.h"
 #include "Poco/Util/HelpFormatter.h"
 #include "OverdriveRequestHandlerFactory.hpp"
+#include "UserIDMapper.h"
+
 
 namespace Overdrive {
 namespace Net {
@@ -22,6 +24,7 @@ namespace Net {
 		
 		void initialize(Poco::Util::Application& self);
 		void uninitialize();
+		
 		int main(const std::vector<std::string>& args);
 
 	public:

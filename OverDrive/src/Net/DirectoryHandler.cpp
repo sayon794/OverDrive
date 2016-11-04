@@ -11,6 +11,17 @@ namespace Overdrive {
 			response.setChunkedTransferEncoding(true);
 			response.setContentType("text/html");
 
+			Poco::Net::NameValueCollection cookies;
+
+			request.getCookies(cookies);
+
+			Poco::Net::NameValueCollection::ConstIterator it = cookies.begin();
+			Poco::Net::NameValueCollection::ConstIterator end = cookies.end();
+
+			for (; it != end; it++) {
+				std::cout << it->first << " " << it->second << std::endl;
+			}
+			
 			std::ostream& ostr = response.send();
 			Poco::FileInputStream fstr;
 			try {

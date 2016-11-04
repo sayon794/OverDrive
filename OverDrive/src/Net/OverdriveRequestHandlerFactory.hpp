@@ -5,8 +5,11 @@
 #include "Poco/Net/HTTPServerRequest.h"
 #include "RootHandler.hpp"
 #include "DirectoryHandler.hpp"
+#include "UserIDMapper.h"
 #include <string>
 #include <algorithm>
+#include <map>
+
 
 namespace Overdrive {
 namespace Net {
@@ -16,6 +19,10 @@ namespace Net {
 
 		Poco::Net::HTTPRequestHandler *createRequestHandler(const Poco::Net::HTTPServerRequest& request);
 
+	private:
+		std::map<std::string, UserIDMapper> map;
 	};
+
+
 }
 }

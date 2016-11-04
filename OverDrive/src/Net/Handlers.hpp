@@ -24,6 +24,7 @@
 #include "Filesystem\FileBrowser.hpp"
 #include <iostream>
 #include <string>
+#include "UserIDMapper.h"
 
 using Poco::Net::ServerSocket;
 using Poco::Net::HTTPRequestHandler;
@@ -71,30 +72,6 @@ namespace Overdrive {
 			std::string _fileName;
 		};
 
-		class authPartHandler : public Poco::Net::PartHandler
-		{
-		public:
-			authPartHandler() :
-				_length(0)
-			{
-			}
-
-			void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream);
-			int length() const { return _length; }
-
-			const std::string& name() const { return _name; }
-
-			const std::string& fileName() const { return _fileName; }
-
-			const std::string& contentType() const { return _type; }
-
-		private:
-			int _length;
-			std::string _type;
-			std::string _name;
-			std::string _fileName;
-		};
-
 		class CSSHandler : public Poco::Net::HTTPRequestHandler {
 		public:
 			CSSHandler() {  }
@@ -117,8 +94,11 @@ namespace Overdrive {
 
 		class userAuthHandler : public Poco::Net::HTTPRequestHandler {
 		public:
-			userAuthHandler() {}
+			userAuthHandler(std::map<std::string, UserIDMapper> &map) { m = map; }
+			void loadMap(std::string name , std::string pw, Poco::Net::HTTPServerResponse& response);
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		private:
+			std::map<std::string, UserIDMapper> m;
 		};
 
 		class FormRequestHandler : public Poco::Net::HTTPRequestHandler
@@ -131,7 +111,7 @@ namespace Overdrive {
 		};
 
 		class LoginRequestHandler : public Poco::Net::HTTPRequestHandler
-			/// Return a HTML document with the current date and time.
+			
 		{
 		public:
 			LoginRequestHandler() {}

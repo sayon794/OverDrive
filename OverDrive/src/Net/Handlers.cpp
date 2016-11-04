@@ -21,25 +21,6 @@ namespace Overdrive {
 			_length = istr.chars();
 		}
 
-		void authPartHandler::handlePart(const Poco::Net::MessageHeader& header, std::istream& stream)
-		{
-			_type = header.get("Content-Type", "(unspecified)");
-			if (header.has("Content-Disposition"))
-			{
-				std::string disp;
-				Poco::Net::NameValueCollection params;
-				Poco::Net::MessageHeader::splitParameters(header["Content-Disposition"], disp, params);
-				_name = params.get("name", "(unnamed)");
-				_fileName = params.get("filename", "(unnamed)");
-			}
-
-			Poco::CountingInputStream istr(stream);
-
-			Poco::FileOutputStream ostr(fileName());
-			Poco::StreamCopier::copyStream(istr, ostr);
-			_length = istr.chars();
-		}
-
 		void CSSHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {
 			response.setChunkedTransferEncoding(true);
 			response.setContentType("text/css");
@@ -86,7 +67,24 @@ namespace Overdrive {
 			Poco::StreamCopier::copyStream(istr, ostr);
 
 		}
-
+		void userAuthHandler::loadMap(std::string name, std::string pw, Poco::Net::HTTPServerResponse& response) {
+			FILE* fp;
+			fp = fopen("mapping.txt", "r");
+			char tempName[100];
+			char tempPw[100];
+			char tempRoot[100];
+			while (fscanf(fp, "%s%s%s", tempName, tempPw, tempRoot) == 3) {
+				if (std::string(tempName) == name && std::string(tempPw) == pw) {
+					fclose(fp);
+					m[std::string(tempName) + std::string(tempPw)] = UserIDMapper(tempName,tempPw,tempRoot);
+					response.addCookie(Poco::Net::HTTPCookie(tempName, std::string(tempName) + std::string(tempPw)));
+					response.redirect(tempRoot);
+					return;
+				}
+			}
+			fclose(fp);
+			response.redirect("/login");
+		}
 		void  userAuthHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {
 			
 			Poco::Net::HTMLForm form(request, request.stream());
@@ -96,15 +94,12 @@ namespace Overdrive {
 			if (!form.empty())
 			{
 				it = form.begin();
-				end = form.end();
-				for (; it != end; ++it)
-				{
-					std::cout << it->first << ": " << it->second << std::endl;
-				}
-			}
+				end = form.begin();
+				end++;
 
-			response.redirect("/52");
-			
+				std::cout << it->second << " " << end->second;
+				loadMap(it->second, end->second, response);
+			}
 		}
 
 		void LoginRequestHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {

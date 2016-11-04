@@ -11,7 +11,7 @@ namespace Net {
 		///Add different handlers for different URI
 		//if (request.getURI() == "/")
 		if (requestURI == "/hello") return new myRequestHandler;
-		//change this myRequestHandler when u remove testTransfer.hpp
+		
 		else if (requestURI.find("/img/") != std::string::npos) {
 			return new generalResourceHandler();
 		}
@@ -19,7 +19,7 @@ namespace Net {
 			return new CSSHandler();
 		}
 		else if (requestURI.find("/userAuthenticate") != std::string::npos) {
-			return new userAuthHandler();
+			return new userAuthHandler(map);
 		}
 		else if (requestURI == "/test") return new FormRequestHandler;
 

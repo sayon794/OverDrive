@@ -2,342 +2,704 @@
 <html>
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>OverDrive - Local cloud storage</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:url" content="">
-	<meta property="og:title" content="OverDrive - Local cloud storage">
-	<meta property="og:description" content="Local cloud storage for CSEDU labrooms">
-	<meta property="og:image" content="/img/favicon.png">
-	<link rel="icon" href="/img/favicon.png">
-	<link rel="canonical" href="">
-	<link rel="stylesheet" href="/css/screen.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>OverDrive - Local cloud storage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="OverDrive - Local cloud storage">
+    <meta property="og:description" content="Local cloud storage for CSEDU labrooms">
+    <meta property="og:image" content="/img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
+    <link rel="canonical" href="">
+    <link rel="stylesheet" href="/css/screen.css">
 
 
-	<!--file browser js-->
-	<script>
+    <!--file browser js-->
+    <script>
 
-	var root;
+        var root;
 
-	function start(location) {
+        function start(location) {
 
-	root = location;
-	var header = document.getElementById("header");
-	header.innerText = location;
-	}
+            root = location;
+            var header = document.getElementById("header");
+            header.innerText = location;
+        }
 
-	function addRow(name, url, isdir, size, size_string, date_modified, date_modified_string) {
-	if (name == ".")
-		return;
+        function addRow(name, url, isdir, size, size_string, date_modified, date_modified_string) {
+            if (name == ".")
+                return;
 
-	if (root.substr(-1) !== "/")
-		root += "/";
+            if (root.substr(-1) !== "/")
+                root += "/";
 
-	var tbody = document.getElementById("tbody");
-	var row = document.createElement("tr");
-	var file_cell = document.createElement("td");
-	var link = document.createElement("a");
+            var tbody = document.getElementById("tbody");
 
-	link.className = isdir ? "icon dir" : "icon file";
+            var row = document.createElement("tr");
+            var file_cell = document.createElement("td");
+            var link = document.createElement("a");
 
-	if (name == "..") {
-	// if on root, shouldn't display
-		link.href = root + "..";
-		link.innerText = document.getElementById("parentDirText").innerText;
-		link.className = "icon up";
-		size = 0;
-		size_string = "";
-		date_modified = 0;
-		date_modified_string = "";
-	} 
-	else {
-		if (isdir) {
-		
-		// i have not decided yet
-		name = name + "/";
-		url = url + "/";
-		size = 0;
-		size_string = "";
-		} 
-		
-		else {
-		link.draggable = "true";
-		link.addEventListener("dragstart", onDragStart, false);
-		}
-		link.innerText = name;
-		//link.href = root + url;
-		link.href = url;
-	}
-	file_cell.dataset.value = name;
-	file_cell.appendChild(link);
+            link.className = isdir ? "icon dir" : "icon file";
 
-	row.appendChild(file_cell);
-	row.appendChild(createCell(size, size_string));
-	row.appendChild(createCell(date_modified, date_modified_string));
+            if (name == "..") {
+                // if on root, shouldn't display
+                link.href = root + "..";
+                link.innerText = "[go up]";
+                link.className = "icon up";
+                size = 0;
+                size_string = "";
+                date_modified = 0;
+                date_modified_string = "";
+            }
+            else {
+                if (isdir) {
 
-	tbody.appendChild(row);
-	}
+                    // i have not decided yet
+                    name = name + "/";
+                    url = url + "/";
+                    size = 0;
+                    size_string = "";
+                }
 
-	function onDragStart(e) {
-	var el = e.srcElement;
-	var name = el.innerText.replace(":", "");
-	var download_url_data = "application/octet-stream:" + name + ":" + el.href;
-	e.dataTransfer.setData("DownloadURL", download_url_data);
-	e.dataTransfer.effectAllowed = "copy";
-	}
+                else {
+                    link.draggable = "true";
+                    link.addEventListener("dragstart", onDragStart, false);
+                }
 
-	function createCell(value, text) {
-	var cell = document.createElement("td");
-	cell.setAttribute("class", "detailsColumn");
-	cell.dataset.value = value;
-	cell.innerText = text;
-	return cell;
-	}
+                link.innerText = name;
+                //link.href = root + url;
+                link.href = url;
+            }
 
-	function onListingParsingError() {
-	var box = document.getElementById("listingParsingErrorBox");
-	box.innerHTML = box.innerHTML.replace("LOCATION", encodeURI(document.location)
-		+ "?raw");
-	box.style.display = "block";
-	}
-
-	function sortTable(column) {
-	var theader = document.getElementById("theader");
-	var oldOrder = theader.cells[column].dataset.order || '1';
-	oldOrder = parseInt(oldOrder, 10)
-	var newOrder = 0 - oldOrder;
-	theader.cells[column].dataset.order = newOrder;
-
-	var tbody = document.getElementById("tbody");
-	var rows = tbody.rows;
-	var list = [], i;
-	for (i = 0; i < rows.length; i++) {
-		list.push(rows[i]);
-	}
-
-	list.sort(function(row1, row2) {
-		var a = row1.cells[column].dataset.value;
-		var b = row2.cells[column].dataset.value;
-		if (column) {
-		a = parseInt(a, 10);
-		b = parseInt(b, 10);
-		return a > b ? newOrder : a < b ? oldOrder : 0;
-		}
-
-		// Column 0 is text.
-		// Also the parent directory should always be sorted at one of the ends.
-		if (b == ".." | a > b) {
-		return newOrder;
-		} else if (a == ".." | a < b) {
-		return oldOrder;
-		} else {
-		return 0;
-		}
-	});
-
-	// Appending an existing child again just moves it.
-	for (i = 0; i < list.length; i++) {
-		tbody.appendChild(list[i]);
-	}
-	}
-	</script>
+            file_cell.dataset.value = name;
+            file_cell.appendChild(link);
 
 
-	<style>
+            /*<li class="file" data-id="abc.txt">
+             <div class="file__content">
+             abc.txt
+             </div>
+             <div class="file__actions">
+             <i class="file-dl"></i>
+             <i class="file-edit"></i>
+             <i class="file-del"></i>
+             </div>
+             </li> */
+
+            console.log("files: "+ url);
+
+            file_cell.className = "file";
+            file_cell.setAttribute('data-id', url);
+
+            var actions = document.createElement("div");
+            actions.className = "file__actions";
+
+            var dl = document.createElement("i");
+            dl.className = "file-dl";
+            actions.appendChild(dl);
+
+            var rename = document.createElement("i");
+            rename.className = "file-edit";
+            actions.appendChild(rename);
+
+            var del =  document.createElement("i");
+            del.className = "file-del";
+            actions.appendChild(del);
+
+            file_cell.appendChild(actions);
 
 
-	table {
-		border-collapse: collapse;
-	}
 
-	th {
-		cursor: pointer;
-	}
 
-	td.detailsColumn {
-		-webkit-padding-start: 2em;
-		text-align: end;
-		white-space: nowrap;
-	}
+            row.appendChild(file_cell);
+            row.appendChild(createCell(size, size_string));
+            row.appendChild(createCell(date_modified, date_modified_string));
 
-	a.icon {
-		-webkit-padding-start: 1.5em;
-		text-decoration: none;
-	}
 
-	a.icon:hover {
-		text-decoration: underline;
-	}
 
-	a.file {
-		background : url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABnRSTlMAAAAAAABupgeRAAABHUlEQVR42o2RMW7DIBiF3498iHRJD5JKHurL+CRVBp+i2T16tTynF2gO0KSb5ZrBBl4HHDBuK/WXACH4eO9/CAAAbdvijzLGNE1TVZXfZuHg6XCAQESAZXbOKaXO57eiKG6ft9PrKQIkCQqFoIiQFBGlFIB5nvM8t9aOX2Nd18oDzjnPgCDpn/BH4zh2XZdlWVmWiUK4IgCBoFMUz9eP6zRN75cLgEQhcmTQIbl72O0f9865qLAAsURAAgKBJKEtgLXWvyjLuFsThCSstb8rBCaAQhDYWgIZ7myM+TUBjDHrHlZcbMYYk34cN0YSLcgS+wL0fe9TXDMbY33fR2AYBvyQ8L0Gk8MwREBrTfKe4TpTzwhArXWi8HI84h/1DfwI5mhxJamFAAAAAElFTkSuQmCC ") left top no-repeat;
-	}
+            tbody.appendChild(row);
+        }
 
-	a.dir {
-		background : url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAd5JREFUeNqMU79rFUEQ/vbuodFEEkzAImBpkUabFP4ldpaJhZXYm/RiZWsv/hkWFglBUyTIgyAIIfgIRjHv3r39MePM7N3LcbxAFvZ2b2bn22/mm3XMjF+HL3YW7q28YSIw8mBKoBihhhgCsoORot9d3/ywg3YowMXwNde/PzGnk2vn6PitrT+/PGeNaecg4+qNY3D43vy16A5wDDd4Aqg/ngmrjl/GoN0U5V1QquHQG3q+TPDVhVwyBffcmQGJmSVfyZk7R3SngI4JKfwDJ2+05zIg8gbiereTZRHhJ5KCMOwDFLjhoBTn2g0ghagfKeIYJDPFyibJVBtTREwq60SpYvh5++PpwatHsxSm9QRLSQpEVSd7/TYJUb49TX7gztpjjEffnoVw66+Ytovs14Yp7HaKmUXeX9rKUoMoLNW3srqI5fWn8JejrVkK0QcrkFLOgS39yoKUQe292WJ1guUHG8K2o8K00oO1BTvXoW4yasclUTgZYJY9aFNfAThX5CZRmczAV52oAPoupHhWRIUUAOoyUIlYVaAa/VbLbyiZUiyFbjQFNwiZQSGl4IDy9sO5Wrty0QLKhdZPxmgGcDo8ejn+c/6eiK9poz15Kw7Dr/vN/z6W7q++091/AQYA5mZ8GYJ9K0AAAAAASUVORK5CYII= ") left top no-repeat;
-	}
+        function onDragStart(e) {
+            var el = e.srcElement;
+            var name = el.innerText.replace(":", "");
+            var download_url_data = "application/octet-stream:" + name + ":" + el.href;
+            e.dataTransfer.setData("DownloadURL", download_url_data);
+            e.dataTransfer.effectAllowed = "copy";
+        }
 
-	a.up {
-		background : url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAmlJREFUeNpsU0toU0EUPfPysx/tTxuDH9SCWhUDooIbd7oRUUTMouqi2iIoCO6lceHWhegy4EJFinWjrlQUpVm0IIoFpVDEIthm0dpikpf3ZuZ6Z94nrXhhMjM3c8895977BBHB2PznK8WPtDgyWH5q77cPH8PpdXuhpQT4ifR9u5sfJb1bmw6VivahATDrxcRZ2njfoaMv+2j7mLDn93MPiNRMvGbL18L9IpF8h9/TN+EYkMffSiOXJ5+hkD+PdqcLpICWHOHc2CC+LEyA/K+cKQMnlQHJX8wqYG3MAJy88Wa4OLDvEqAEOpJd0LxHIMdHBziowSwVlF8D6QaicK01krw/JynwcKoEwZczewroTvZirlKJs5CqQ5CG8pb57FnJUA0LYCXMX5fibd+p8LWDDemcPZbzQyjvH+Ki1TlIciElA7ghwLKV4kRZstt2sANWRjYTAGzuP2hXZFpJ/GsxgGJ0ox1aoFWsDXyyxqCs26+ydmagFN/rRjymJ1898bzGzmQE0HCZpmk5A0RFIv8Pn0WYPsiu6t/Rsj6PauVTwffTSzGAGZhUG2F06hEc9ibS7OPMNp6ErYFlKavo7MkhmTqCxZ/jwzGA9Hx82H2BZSw1NTN9Gx8ycHkajU/7M+jInsDC7DiaEmo1bNl1AMr9ASFgqVu9MCTIzoGUimXVAnnaN0PdBBDCCYbEtMk6wkpQwIG0sn0PQIUF4GsTwLSIFKNqF6DVrQq+IWVrQDxAYQC/1SsYOI4pOxKZrfifiUSbDUisif7XlpGIPufXd/uvdvZm760M0no1FZcnrzUdjw7au3vu/BVgAFLXeuTxhTXVAAAAAElFTkSuQmCC ") left top no-repeat;
-	}
+        function createCell(value, text) {
+            var cell = document.createElement("td");
+            cell.setAttribute("class", "detailsColumn");
+            cell.dataset.value = value;
+            cell.innerText = text;
+            return cell;
+        }
 
-	html[dir=rtl] a {
-		background-position-x: right;
-	}
+        function onListingParsingError() {
+            var box = document.getElementById("listingParsingErrorBox");
+            box.innerHTML = box.innerHTML.replace("LOCATION", encodeURI(document.location)
+                    + "?raw");
+            box.style.display = "block";
+        }
 
-	</style>
+        function sortTable(column) {
+            var theader = document.getElementById("theader");
+            var oldOrder = theader.cells[column].dataset.order || '1';
+            oldOrder = parseInt(oldOrder, 10)
+            var newOrder = 0 - oldOrder;
+            theader.cells[column].dataset.order = newOrder;
+
+            var tbody = document.getElementById("tbody");
+            var rows = tbody.rows;
+            var list = [], i;
+            for (i = 0; i < rows.length; i++) {
+                list.push(rows[i]);
+            }
+
+            list.sort(function (row1, row2) {
+                var a = row1.cells[column].dataset.value;
+                var b = row2.cells[column].dataset.value;
+                if (column) {
+                    a = parseInt(a, 10);
+                    b = parseInt(b, 10);
+                    return a > b ? newOrder : a < b ? oldOrder : 0;
+                }
+
+                // Column 0 is text.
+                // Also the parent directory should always be sorted at one of the ends.
+                if (b == ".." | a > b) {
+                    return newOrder;
+                } else if (a == ".." | a < b) {
+                    return oldOrder;
+                } else {
+                    return 0;
+                }
+            });
+
+            // Appending an existing child again just moves it.
+            for (i = 0; i < list.length; i++) {
+                tbody.appendChild(list[i]);
+            }
+        }
+    </script>
+
+    <style>
+
+
+        .files {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .file {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .file:last-child {
+            border-bottom: none;
+        }
+
+        /* context menu */
+
+        .context-menu {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            padding: 12px 0;
+            width: 240px;
+            background-color: #fff;
+            border: solid 1px #dfdfdf;
+            box-shadow: 1px 1px 2px #cfcfcf;
+        }
+
+        .context-menu--active {
+            display: block;
+        }
+
+        .context-menu__items {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .context-menu__item {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .context-menu__item:last-child {
+            margin-bottom: 0;
+        }
+
+        .context-menu__link {
+            display: block;
+            padding: 4px 12px;
+            color: #0066aa;
+            text-decoration: none;
+        }
+
+        .context-menu__link:hover {
+            color: #fff;
+            background-color: #0066aa;
+        }-->
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th {
+            cursor: pointer;
+            -webkit-padding-start: 2em;
+        }
+
+        td.detailsColumn {
+            -webkit-padding-start: 2em;
+            text-align: start;
+            white-space: nowrap;
+        }
+
+        a.icon {
+            -webkit-padding-start: 1.5em;
+            text-decoration: none;
+        }
+
+        a.icon:hover {
+            text-decoration: underline;
+        }
+
+        a.file {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABnRSTlMAAAAAAABupgeRAAABHUlEQVR42o2RMW7DIBiF3498iHRJD5JKHurL+CRVBp+i2T16tTynF2gO0KSb5ZrBBl4HHDBuK/WXACH4eO9/CAAAbdvijzLGNE1TVZXfZuHg6XCAQESAZXbOKaXO57eiKG6ft9PrKQIkCQqFoIiQFBGlFIB5nvM8t9aOX2Nd18oDzjnPgCDpn/BH4zh2XZdlWVmWiUK4IgCBoFMUz9eP6zRN75cLgEQhcmTQIbl72O0f9865qLAAsURAAgKBJKEtgLXWvyjLuFsThCSstb8rBCaAQhDYWgIZ7myM+TUBjDHrHlZcbMYYk34cN0YSLcgS+wL0fe9TXDMbY33fR2AYBvyQ8L0Gk8MwREBrTfKe4TpTzwhArXWi8HI84h/1DfwI5mhxJamFAAAAAElFTkSuQmCC ") left top no-repeat;
+        }
+
+        a.dir {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAd5JREFUeNqMU79rFUEQ/vbuodFEEkzAImBpkUabFP4ldpaJhZXYm/RiZWsv/hkWFglBUyTIgyAIIfgIRjHv3r39MePM7N3LcbxAFvZ2b2bn22/mm3XMjF+HL3YW7q28YSIw8mBKoBihhhgCsoORot9d3/ywg3YowMXwNde/PzGnk2vn6PitrT+/PGeNaecg4+qNY3D43vy16A5wDDd4Aqg/ngmrjl/GoN0U5V1QquHQG3q+TPDVhVwyBffcmQGJmSVfyZk7R3SngI4JKfwDJ2+05zIg8gbiereTZRHhJ5KCMOwDFLjhoBTn2g0ghagfKeIYJDPFyibJVBtTREwq60SpYvh5++PpwatHsxSm9QRLSQpEVSd7/TYJUb49TX7gztpjjEffnoVw66+Ytovs14Yp7HaKmUXeX9rKUoMoLNW3srqI5fWn8JejrVkK0QcrkFLOgS39yoKUQe292WJ1guUHG8K2o8K00oO1BTvXoW4yasclUTgZYJY9aFNfAThX5CZRmczAV52oAPoupHhWRIUUAOoyUIlYVaAa/VbLbyiZUiyFbjQFNwiZQSGl4IDy9sO5Wrty0QLKhdZPxmgGcDo8ejn+c/6eiK9poz15Kw7Dr/vN/z6W7q++091/AQYA5mZ8GYJ9K0AAAAAASUVORK5CYII= ") left top no-repeat;
+        }
+
+        a.up {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAmlJREFUeNpsU0toU0EUPfPysx/tTxuDH9SCWhUDooIbd7oRUUTMouqi2iIoCO6lceHWhegy4EJFinWjrlQUpVm0IIoFpVDEIthm0dpikpf3ZuZ6Z94nrXhhMjM3c8895977BBHB2PznK8WPtDgyWH5q77cPH8PpdXuhpQT4ifR9u5sfJb1bmw6VivahATDrxcRZ2njfoaMv+2j7mLDn93MPiNRMvGbL18L9IpF8h9/TN+EYkMffSiOXJ5+hkD+PdqcLpICWHOHc2CC+LEyA/K+cKQMnlQHJX8wqYG3MAJy88Wa4OLDvEqAEOpJd0LxHIMdHBziowSwVlF8D6QaicK01krw/JynwcKoEwZczewroTvZirlKJs5CqQ5CG8pb57FnJUA0LYCXMX5fibd+p8LWDDemcPZbzQyjvH+Ki1TlIciElA7ghwLKV4kRZstt2sANWRjYTAGzuP2hXZFpJ/GsxgGJ0ox1aoFWsDXyyxqCs26+ydmagFN/rRjymJ1898bzGzmQE0HCZpmk5A0RFIv8Pn0WYPsiu6t/Rsj6PauVTwffTSzGAGZhUG2F06hEc9ibS7OPMNp6ErYFlKavo7MkhmTqCxZ/jwzGA9Hx82H2BZSw1NTN9Gx8ycHkajU/7M+jInsDC7DiaEmo1bNl1AMr9ASFgqVu9MCTIzoGUimXVAnnaN0PdBBDCCYbEtMk6wkpQwIG0sn0PQIUF4GsTwLSIFKNqF6DVrQq+IWVrQDxAYQC/1SsYOI4pOxKZrfifiUSbDUisif7XlpGIPufXd/uvdvZm760M0no1FZcnrzUdjw7au3vu/BVgAFLXeuTxhTXVAAAAAElFTkSuQmCC ") left top no-repeat;
+        }
+
+        html[dir=rtl] a {
+            background-position-x: right;
+        }
+
+    </style>
 
 </head>
-
 
 
 <!--BODY-->
 
 <body class="page-container-bg-solid">
-	<div class="page-wrapper">
+<div class="page-wrapper">
+
+
+    <div class="page-wrapper-row">
+
+        <div class="page-wrapper-top">
+
+            <div class="page-header">
+                <div class="page-header-top">
+                    <div class="container">
+                        <div class="page-logo">
+                            <a href=""><img class="logo-default" src="/img/logo.png" alt="OverDrive"></a>
+                        </div>
+
+                        <div class="top-menu">
+                            <ul class="nav navbar-nav pull-right">
+                                <li>
+                                    <a href="">Account</a>
+                                </li>
+                                <li>
+                                    <a href="">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-header-menu" style="display: block;">
+                    <div class="container">
+                        <div class="hor-menu">
+                            <ul class="nav navbar-nav">
+
+                                <li>
+                                    <a href="">My Files</a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="page-wrapper-row full-height" style="min-height: 505.778px;">
+        <div class="page-wrapper-middle">
+            <div class="page-container">
+                <div class="page-content-wrapper">
+
+                </div>
+                <div class="page-content">
+                    <div class="container">
+                        <!--My things here-->
+
+                        <h3>My Files</h3>
+                        <h5>Right click for more options</h5>
+
+                        <h1 id="header"></h1>
+
+                        <table>
+                            <thead>
+                            <tr class="header" id="theader">
+                                <th onclick="javascript:sortTable(0);">Name</th>
+                                <th class="detailsColumn" onclick="javascript:sortTable(1);">Size</th>
+                                <th class="detailsColumn" onclick="javascript:sortTable(2);">Date Modified</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody" class="files">
+                            </tbody>
+                        </table>
+
+
+                        <h3>Upload</h3>
+                        <form action="">
+                            <input type="file" name="pic" accept="image/*">
+                            <input type="submit">
+                        </form>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="page-wrapper-row">
+    <div class="page-wrapper-bottom">
+        <div class="page-footer">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="logo-wrapper">
+                            <img class="logo-default" src="/img/logo-w.png">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 col-xs-4">
+                        <ul>
+
+                            <li>
+                                <a href="https://mehamasum.com/">About the team</a>
+                            </li>
+
+                            <li>
+                                <a href="https://OverDrive.ws/terms">Source code</a>
+                            </li>
+                            <li>
+                                <a href="https://OverDrive.ws/privacy">Terms of use</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--SCRIPT-->
+<script>
+    //this should be posted
+    <!--start("data/user");-->
+    start("");
+</script>
 
 
 
-		<div class="page-wrapper-row">
 
-			<div class="page-wrapper-top">
+<!--<script>addRow("..", "..", 0, 0, "0 B", 0, "");</script> -->
+<!--<script>addRow("folder","folder",1, 0, "0 B", 0 , "");</script>
+<script>addRow("file1","file1",0,71984,"70.3 kB",928346400,"6/3/99, 12:00:00 AM");</script>
+<script>addRow("file2","file2",0,261195,"255 kB",928346400,"6/3/99, 12:00:00 AM");</script>
+<script>addRow("file3","file3",0,260811,"255 kB",929383200,"6/15/99, 12:00:00 AM");</script>-->
 
-				<div class="page-header">
-					<div class="page-header-top">
-						<div class="container">
-							<div class="page-logo">
-								<a href=""><img class="logo-default" src="/img/logo.png" alt="OverDrive"></a>
-							</div>
-
-							<div class="top-menu">
-								<ul class="nav navbar-nav pull-right">
-									<li>
-										<a href="">Account</a>
-									</li>
-									<li>
-										<a href="">Logout</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="page-header-menu" style="display: block;">
-						<div class="container">
-							<div class="hor-menu">
-								<ul class="nav navbar-nav">
-
-									<li>
-										<a href="">My Files</a>
-									</li>
+<nav id="context-menu" class="context-menu">
+    <ul class="context-menu__items">
+        <li class="context-menu__item">
+            <a href="" class="context-menu__link" data-action="download"><i class="file-dl"></i>
+                Download</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="" class="context-menu__link" data-action="rename"><i class="file-edit"></i> Rename</a>
+        </li>
+        <li class="context-menu__item">
+            <a href="" class="context-menu__link" data-action="delete"><i class="file-del"></i> Delete</a>
+        </li>
+    </ul>
+</nav>
 
 
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
+<script>
+
+    // i haven't completed it as yet
+    // still goes to the wrong url
+
+    (function () {
+
+        "use strict";
+
+        /**
+         * Function to check if we clicked inside an element with a particular class
+         * name.
+         *
+         * @param {Object} e The event
+         * @param {String} className The class name to check against
+         * @return {Boolean}
+         */
+        function clickInsideElement(e, className) {
+            var el = e.srcElement || e.target;
+
+            if (el.classList.contains(className)) {
+                return el;
+            } else {
+                while (el = el.parentNode) {
+                    if (el.classList && el.classList.contains(className)) {
+                        return el;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         * Get's exact position of event.
+         *
+         * @param {Object} e The event passed in
+         * @return {Object} Returns the x and y position
+         */
+        function getPosition(e) {
+            var posx = 0;
+            var posy = 0;
+
+            if (!e) var e = window.event;
+
+            if (e.pageX || e.pageY) {
+                posx = e.pageX;
+                posy = e.pageY;
+            } else if (e.clientX || e.clientY) {
+                posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+                posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+            }
+
+            return {
+                x: posx,
+                y: posy
+            }
+        }
 
 
+        /**
+         * Variables.
+         */
+        var contextMenuClassName = "context-menu";
+        var contextMenuItemClassName = "context-menu__item";
+        var contextMenuLinkClassName = "context-menu__link";
+        var contextMenuActive = "context-menu--active";
 
-			</div>
-		</div>
+        var fileItemClassName = "file";
+        var fileItemInContext;
 
+        var clickCoords;
+        var clickCoordsX;
+        var clickCoordsY;
 
+        var menu = document.querySelector("#context-menu");
+        var menuItems = menu.querySelectorAll(".context-menu__item");
+        var menuState = 0;
+        var menuWidth;
+        var menuHeight;
+        var menuPosition;
+        var menuPositionX;
+        var menuPositionY;
 
-		<div class="page-wrapper-row full-height" style="min-height: 505.778px;">
-			<div class="page-wrapper-middle">
-				<div class="page-container">
-					<div class="page-content-wrapper">
+        var windowWidth;
+        var windowHeight;
 
-					</div>
-					<div class="page-content">
-						<div class="container">
-							<!--My things here-->
+        /**
+         * Initialise our application's code.
+         */
+        function init() {
+            contextListener();
+            clickListener();
+            keyupListener();
+            resizeListener();
+        }
 
-							<h3>This homepage takes user to data/user directory.</h3>
+        /**
+         * Listens for contextmenu events.
+         */
+        function contextListener() {
+            document.addEventListener("contextmenu", function (e) {
+                fileItemInContext = clickInsideElement(e, fileItemClassName);
 
-							<h1 id="header"></h1>
-
-							<table>
-							<thead>
-								<tr class="header" id="theader">
-								<th onclick="javascript:sortTable(0);">Name</th>
-								<th class="detailsColumn" onclick="javascript:sortTable(1);">Size</th>
-								<th class="detailsColumn" onclick="javascript:sortTable(2);">Date Modified</th>
-								</tr>
-							</thead>
-							<tbody id="tbody">
-							</tbody>
-							</table>
-
-
-							<h1>Upload</h1>
-							<h3>Demo submit box, add POCO as needed</h3>
-							<form action="">
-							<input type="file" name="pic" accept="image/*">
-							<input type="submit">
-							</form>
-
-
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
+                console.log("contextListener, fileItemInContext : " + fileItemInContext + " dataid=" + fileItemInContext.getAttribute("data-id"));
 
 
-	<div class="page-wrapper-row">
-		<div class="page-wrapper-bottom">
-			<div class="page-footer">
+                if (fileItemInContext) {
+                    e.preventDefault();
+                    toggleMenuOn();
+                    positionMenu(e);
+                } else {
+                    fileItemInContext = null;
+                    toggleMenuOff();
+                }
+            });
+        }
 
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<div class="logo-wrapper">
-								<img class="logo-default" src="/img/logo-w.png">
-							</div>
-						</div>
+        /**
+         * Listens for click events.
+         */
+        function clickListener() {
+            document.addEventListener("click", function (e) {
+                var clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
 
-						<div class="col-sm-3 col-xs-4">
-							<ul>
+                if (clickeElIsLink) {
+                    e.preventDefault();
+                    //console.log("clicked with:" + clickeElIsLink);
+                    menuItemListener(clickeElIsLink);
 
-								<li>
-									<a href="https://furqansoftware.com/">Abuot the team</a>
-								</li>
+                }
+                else {
+                    var button = e.which || e.button;
+                    if (button === 1) {
+                        toggleMenuOff();
+                    }
+                }
+            });
+        }
 
-								<li>
-									<a href="https://OverDrive.ws/terms">Source code</a>
-								</li>
-								<li>
-									<a href="https://OverDrive.ws/privacy">Terms of use</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+        /**
+         * Listens for keyup events.
+         */
+        function keyupListener() {
+            window.onkeyup = function (e) {
+                if (e.keyCode === 27) {
+                    toggleMenuOff();
+                }
+            }
+        }
 
-			</div>
-		</div>
-	</div>
+        /**
+         * Window resize event listener
+         */
+        function resizeListener() {
+            window.onresize = function (e) {
+                toggleMenuOff();
+            };
+        }
 
+        /**
+         * Turns the custom context menu on.
+         */
+        function toggleMenuOn() {
+            if (menuState !== 1) {
+                menuState = 1;
+                menu.classList.add(contextMenuActive);
+            }
+        }
 
-	<!--SCRIPT-->
-	<script>
-	//this should be posted
-	<!--start("data/user");-->
-	start("");
-	</script> 
+        /**
+         * Turns the custom context menu off.
+         */
+        function toggleMenuOff() {
+            if (menuState !== 0) {
+                menuState = 0;
+                menu.classList.remove(contextMenuActive);
+            }
+        }
 
-	<script>addRow("..","..",0,0,"0 B",0,"");</script>
-	<!--<script>addRow("folder","folder",1, 0, "0 B", 0 , "");</script>
-	<script>addRow("file1","file1",0,71984,"70.3 kB",928346400,"6/3/99, 12:00:00 AM");</script>
-	<script>addRow("file2","file2",0,261195,"255 kB",928346400,"6/3/99, 12:00:00 AM");</script>
-	<script>addRow("file3","file3",0,260811,"255 kB",929383200,"6/15/99, 12:00:00 AM");</script>-->
+        /**
+         * Positions the menu properly.
+         *
+         * @param {Object} e The event
+         */
+        function positionMenu(e) {
+            clickCoords = getPosition(e);
+            clickCoordsX = clickCoords.x;
+            clickCoordsY = clickCoords.y;
 
+            menuWidth = menu.offsetWidth + 4;
+            menuHeight = menu.offsetHeight + 4;
 
+            windowWidth = window.innerWidth;
+            windowHeight = window.innerHeight;
+
+            if ((windowWidth - clickCoordsX) < menuWidth) {
+                menu.style.left = windowWidth - menuWidth + "px";
+            } else {
+                menu.style.left = clickCoordsX + "px";
+            }
+
+            if ((windowHeight - clickCoordsY) < menuHeight) {
+                menu.style.top = windowHeight - menuHeight + "px";
+            } else {
+                menu.style.top = clickCoordsY + "px";
+            }
+        }
+
+        /**
+         * Dummy action function that logs an action when a menu item link is clicked
+         *
+         * @param {HTMLElement} link The link that was clicked
+         */
+        function menuItemListener(link) {
+
+            var id;
+
+            if(fileItemInContext.getAttribute("data-id")) {
+                id = fileItemInContext.getAttribute("data-id");
+                //window.location.href = fileItemInContext.getAttribute("data-id") + "?" + link.getAttribute('data-action');
+                console.log( "File ID - " +  + ", File action - " + link.getAttribute("data-action"));
+            }
+
+            else {
+                //
+                var slash = fileItemInContext.href.lastIndexOf("/");
+                id = fileItemInContext.href.substr(slash+1);
+                id += "/" ;
+
+                console.log( "File ID - " + id + ", File action - " + link.getAttribute("data-action"));
+
+            }
+
+            id = id.substr(0, id.length-1);
+            window.location.href = id + "?" + link.getAttribute('data-action');
+
+            toggleMenuOff();
+        }
+
+        /**
+         * Run the app.
+         */
+        init();
+
+    })();
+</script>
 
 
 </body>

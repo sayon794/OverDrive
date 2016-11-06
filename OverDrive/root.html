@@ -681,13 +681,13 @@
                 //
                 var slash = fileItemInContext.href.lastIndexOf("/");
                 id = fileItemInContext.href.substr(slash+1);
-                id += "/" ;
+                //id += "/" ;
 
                 console.log( "File ID - " + id + ", File action - " + link.getAttribute("data-action"));
 
             }
 
-            id = id.substr(0, id.length-1);
+            //id = id.substr(0, id.length-1);
             window.location.href = id + "?" + link.getAttribute('data-action');
 
             toggleMenuOff();

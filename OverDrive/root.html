@@ -701,9 +701,46 @@
             }
 
             //id = id.substr(0, id.length-1);
-            window.location.href = id + "?" + link.getAttribute('data-action');
+
+            if(link.getAttribute("data-action")=="delete") {
+                if (confirmation() == 1)
+                    window.location.href = id + "?" + link.getAttribute('data-action');
+            }
+
+            else if(link.getAttribute("data-action")=="rename") {
+                var new_name = renamer(id);
+                //console.log(new_name);
+
+                if(new_name)
+                    window.location.href = id + "?" + link.getAttribute('data-action') + "="+ new_name;
+            }
+
+            else
+                window.location.href = id + "?" + link.getAttribute('data-action');
 
             toggleMenuOff();
+        }
+
+        function confirmation() {
+            if (confirm("Are you sure?") == true) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+        function renamer(old_name) {
+            var new_name = prompt("Rename folder", old_name);
+
+            //TODO: check for illegal characters
+            //TODO: check if already there
+
+            if (new_name && new_name!=old_name) {
+                return new_name;
+            }
+            else {
+                return null;
+            }
         }
 
         /**

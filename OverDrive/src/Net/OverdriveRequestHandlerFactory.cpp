@@ -11,7 +11,8 @@ namespace Net {
 		//std::cout << requestURI << std::endl;
 
 		///Add different handlers for different URI
-		//if (request.getURI() == "/")
+		//if (requestURI == "/")
+
 		if (requestURI == "/hello") return new myRequestHandler;
 		
 		else if (requestURI.find("/img/") != std::string::npos) {

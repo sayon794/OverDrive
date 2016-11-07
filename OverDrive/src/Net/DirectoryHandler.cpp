@@ -4,6 +4,7 @@
 #include "Filesystem/DirectoryLoader.hpp"
 #include "Filesystem/FileDelete.hpp"
 #include "Filesystem/FileRename.hpp"
+#include "Filesystem/AddFolder.hpp"
 #include "Poco/URI.h"
 #include <iostream>
 
@@ -35,6 +36,10 @@ namespace Overdrive {
 				filestrat = new Overdrive::Filesystem::FileDelete();
 			else if (uri.getQuery().find("rename") != std::string::npos)
 				filestrat = new Overdrive::Filesystem::FileRename();
+			else if (uri.getQuery().find("folder-name") != std::string::npos)
+			{
+				filestrat = new Overdrive::Filesystem::AddFolder();
+			}
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader();
 

@@ -42,7 +42,10 @@
     <ClCompile Include="src\Filesystem\DirectoryLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileRename.cpp">
+    <ClCompile Include="src\Filesystem\FileRename.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Filesystem\AddFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +80,10 @@
     <ClInclude Include="src\Filesystem\DirectoryLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileRename.hpp">
+    <ClInclude Include="src\Filesystem\FileRename.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Filesystem\AddFolder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,9 @@
 #include "DirectoryHandler.hpp"
 #include "Poco/FileStream.h"
 #include "Poco/Exception.h"
-#include "Filesystem/FileBrowser.hpp"
+#include "Filesystem/DirectoryLoader.hpp"
+#include "Filesystem/FileDelete.hpp"
+#include "Poco/URI.h"
 #include <iostream>
 
 namespace Overdrive {
@@ -22,23 +24,18 @@ namespace Overdrive {
 				std::cout << it->first << " " << it->second << std::endl;
 			}
 			
-			std::ostream& ostr = response.send();
-			Poco::FileInputStream fstr;
-			try {
-				fstr.open("root.html", std::ios::in);
-			}
-			catch (Poco::FileException &e) {
-				std::cout << "Poco::FileException " << e.message() << std::endl;
-			}
-			std::string buffer;
-			while (std::getline(fstr, buffer)) {
-				if (buffer.find("</body>") != std::string::npos) {
-					//std::cout << request.getURI() << std::endl;
-					Overdrive::Filesystem::FileBrowser filebrowser(request.getURI().substr(1,request.getURI().length()-2));
-					ostr << filebrowser.createScript();
-				}
-				ostr << buffer << "\n";
-			}
+			Poco::URI uri(request.getURI());
+
+			Overdrive::Filesystem::FileHandlerStrategy* filestrat;
+			
+			if (uri.getQuery() == "?delete")
+				filestrat = new Overdrive::Filesystem::FileDelete();
+			else
+				filestrat = new Overdrive::Filesystem::DirectoryLoader();
+
+			filestrat->handle(uri, std::string(""), response);		//add root here later instead of empty string
+
+			delete filestrat;
 		}
 
 	}

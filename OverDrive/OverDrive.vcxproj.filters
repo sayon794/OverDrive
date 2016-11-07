@@ -36,6 +36,12 @@
     <ClCompile Include="src\Net\DirectoryHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Filesystem\FileDelete.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Filesystem\DirectoryLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Net\OverdriveServer.hpp">
@@ -59,7 +65,13 @@
     <ClInclude Include="src\Net\UserIDMapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Filesystem\DirectoryStrategy.hpp">
+    <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Filesystem\FileDelete.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Filesystem\DirectoryLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

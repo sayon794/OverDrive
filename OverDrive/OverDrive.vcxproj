@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Filesystem\DirectoryLoader.cpp" />
     <ClCompile Include="src\Filesystem\FileBrowser.cpp" />
+    <ClCompile Include="src\Filesystem\FileDelete.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Net\DirectoryHandler.cpp" />
     <ClCompile Include="src\Net\Handlers.cpp" />
@@ -28,7 +30,9 @@
     <ClCompile Include="src\Net\RootHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Filesystem\DirectoryStrategy.hpp" />
+    <ClInclude Include="src\Filesystem\DirectoryLoader.hpp" />
+    <ClInclude Include="src\Filesystem\FileDelete.hpp" />
+    <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp" />
     <ClInclude Include="src\Filesystem\FileBrowser.hpp" />
     <ClInclude Include="src\Net\DirectoryHandler.hpp" />
     <ClInclude Include="src\Net\OverdriveRequestHandlerFactory.hpp" />

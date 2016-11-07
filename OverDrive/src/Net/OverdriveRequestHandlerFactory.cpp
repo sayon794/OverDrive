@@ -1,10 +1,12 @@
 #include "OverdriveRequestHandlerFactory.hpp"
 #include "Handlers.hpp"
+#include "Poco/URI.h"
 
 namespace Overdrive {
 namespace Net {
 	Poco::Net::HTTPRequestHandler *OverdriveRequestHandlerFactory::createRequestHandler(const Poco::Net::HTTPServerRequest& request) {
-		std::string requestURI = request.getURI();
+		Poco::URI uri(request.getURI());
+		std::string requestURI = uri.getPath();
 
 		//std::cout << requestURI << std::endl;
 

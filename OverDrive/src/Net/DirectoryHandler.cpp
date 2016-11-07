@@ -26,9 +26,11 @@ namespace Overdrive {
 			
 			Poco::URI uri(request.getURI());
 
+			std::cout << uri.getPath() << " " << uri.getQuery() << std::endl;
+
 			Overdrive::Filesystem::FileHandlerStrategy* filestrat;
 			
-			if (uri.getQuery() == "?delete")
+			if (uri.getQuery().find("delete") != std::string::npos)
 				filestrat = new Overdrive::Filesystem::FileDelete();
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader();

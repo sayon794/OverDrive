@@ -3,6 +3,7 @@
 #include "Poco/Exception.h"
 #include "Filesystem/DirectoryLoader.hpp"
 #include "Filesystem/FileDelete.hpp"
+#include "Filesystem/FileRename.hpp"
 #include "Poco/URI.h"
 #include <iostream>
 
@@ -32,6 +33,8 @@ namespace Overdrive {
 			
 			if (uri.getQuery().find("delete") != std::string::npos)
 				filestrat = new Overdrive::Filesystem::FileDelete();
+			else if (uri.getQuery().find("rename") != std::string::npos)
+				filestrat = new Overdrive::Filesystem::FileRename();
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader();
 

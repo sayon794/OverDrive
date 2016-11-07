@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FileRename.cpp" />
     <ClCompile Include="src\Filesystem\DirectoryLoader.cpp" />
     <ClCompile Include="src\Filesystem\FileBrowser.cpp" />
     <ClCompile Include="src\Filesystem\FileDelete.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="src\Net\RootHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileRename.hpp" />
     <ClInclude Include="src\Filesystem\DirectoryLoader.hpp" />
     <ClInclude Include="src\Filesystem\FileDelete.hpp" />
     <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp" />

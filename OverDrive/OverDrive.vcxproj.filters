@@ -42,6 +42,9 @@
     <ClCompile Include="src\Filesystem\DirectoryLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileRename.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Net\OverdriveServer.hpp">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Filesystem\DirectoryLoader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileRename.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

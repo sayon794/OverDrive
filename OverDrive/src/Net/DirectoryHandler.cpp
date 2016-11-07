@@ -26,7 +26,7 @@ namespace Overdrive {
 			
 			Poco::URI uri(request.getURI());
 
-			std::cout << uri.getPath() << " " << uri.getQuery() << std::endl;
+			//std::cout << uri.getPath() << " " << uri.getQuery() << std::endl;
 
 			Overdrive::Filesystem::FileHandlerStrategy* filestrat;
 			

@@ -41,7 +41,8 @@ namespace Overdrive {
 			else if (uri.getQuery().find("download") != std::string::npos)
 			{
 				std::cout << uri.getPath() << " " << uri.getQuery() << " New Download" << std::endl;
-				new generalResourceHandler();
+				generalResourceHandler g;
+				g.handleRequest(request, response);
 				return;
 			}
 			else

@@ -79,10 +79,10 @@ namespace Overdrive {
 					fclose(fp);
 					std::string sessionID = std::string(tempName) + std::string(tempPw);
 					
-					m[sessionID] = UserIDMapper(tempName,tempPw,tempRoot);
-					states[sessionID] = Context();
+					(*m)[sessionID] = UserIDMapper(tempName,tempPw,tempRoot);
+					(*s)[sessionID] = Context();
 
-					lin.doAction(states[sessionID]);
+					lin.doAction((*s)[sessionID]);
 
 					response.addCookie(Poco::Net::HTTPCookie(sessionID, tempRoot));
 					response.redirect(tempRoot);
@@ -194,5 +194,9 @@ namespace Overdrive {
 			}
 			ostr << "</body>\n";
 		}
-	}
+		void redirectToRootHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response)
+		{
+			response.redirect(root);
+		}
+}
 }

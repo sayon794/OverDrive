@@ -95,12 +95,15 @@ namespace Overdrive {
 
 		class userAuthHandler : public Poco::Net::HTTPRequestHandler {
 		public:
-			userAuthHandler(std::map<std::string, UserIDMapper> &map) { m = map; }
+			userAuthHandler(std::map<std::string, UserIDMapper> &map, 
+				std::map<std::string, Context> &states) {
+				m = &map; s = &states; 
+			}
 			void loadMap(std::string name , std::string pw, Poco::Net::HTTPServerResponse& response);
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 		private:
-			std::map<std::string, UserIDMapper> m;
-			std::map<std::string, Context> states;
+			std::map<std::string, UserIDMapper> *m;
+			std::map<std::string, Context> *s;
 			logged_in lin;
 		};
 
@@ -120,6 +123,16 @@ namespace Overdrive {
 			LoginRequestHandler() {}
 
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		};
+
+		class redirectToRootHandler : public Poco::Net::HTTPRequestHandler {
+		public:
+			redirectToRootHandler(std::string rootAdd) {
+				root = rootAdd;
+			}
+			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		private:
+			std::string root;
 		};
 	}
 }

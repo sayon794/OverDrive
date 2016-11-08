@@ -9,6 +9,7 @@
 #include <string>
 #include <algorithm>
 #include <map>
+#include "StatePattern.hpp"
 
 
 namespace Overdrive {
@@ -19,8 +20,12 @@ namespace Net {
 
 		Poco::Net::HTTPRequestHandler *createRequestHandler(const Poco::Net::HTTPServerRequest& request);
 
+		bool CheckLoggedInStatus(const Poco::Net::HTTPServerRequest& request);
+
 	private:
 		std::map<std::string, UserIDMapper> map;
+		std::map<std::string, Context> states;
+		std::string rootAdd;
 	};
 
 

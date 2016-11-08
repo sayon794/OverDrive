@@ -23,7 +23,7 @@ namespace Net {
 			return new CSSHandler();
 		}
 		if (requestURI.find("/userAuthenticate") != std::string::npos) {
-			return new userAuthHandler(map);
+			return new userAuthHandler(map, states);
 		}
 		if (requestURI == "/test") return new FormRequestHandler;
 
@@ -32,11 +32,32 @@ namespace Net {
 		if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/')
 			return new DirectoryHandler();
 
-		else if (requestURI.length() > 1)
+		if (requestURI.length() > 1)
 			return new FileHandler();
 
-
+		if (CheckLoggedInStatus(request)) {
+			return new redirectToRootHandler(rootAdd);
+		}
 		return new RootHandler();
+	}
+	bool OverdriveRequestHandlerFactory::CheckLoggedInStatus(const Poco::Net::HTTPServerRequest& request) {
+		Poco::Net::NameValueCollection cookies;
+
+		request.getCookies(cookies);
+
+		Poco::Net::NameValueCollection::ConstIterator it = cookies.begin();
+		Poco::Net::NameValueCollection::ConstIterator end = cookies.end();
+
+		for (; it != end; it++) {
+			if (states.find(it->first) != states.end()) {
+				if (states[it->first].getState()) {
+					
+					rootAdd = it->second;
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
 }

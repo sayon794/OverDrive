@@ -100,8 +100,8 @@ namespace Overdrive {
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 		private:
 			std::map<std::string, UserIDMapper> m;
-			//std::map<std::string, Context> states;
-			//logged_in lin;
+			std::map<std::string, Context> states;
+			logged_in lin;
 		};
 
 		class FormRequestHandler : public Poco::Net::HTTPRequestHandler

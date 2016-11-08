@@ -5,7 +5,7 @@
 #include "Poco/Net/HTTPServerRequest.h"
 #include "RootHandler.hpp"
 #include "DirectoryHandler.hpp"
-#include "UserIDMapper.h"
+#include "UserIDMapper.hpp"
 #include <string>
 #include <algorithm>
 #include <map>

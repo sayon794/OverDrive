@@ -16,24 +16,30 @@ namespace Net {
 
 		if (requestURI == "/hello") return new myRequestHandler;
 		
-		else if (requestURI.find("/img/") != std::string::npos) {
+		if (requestURI.find("/img/") != std::string::npos) {
 			return new generalResourceHandler();
 		}
-		else if (requestURI.find("/css/") != std::string::npos) {
+		if (requestURI.find("/css/") != std::string::npos) {
 			return new CSSHandler();
 		}
-		else if (requestURI.find("/userAuthenticate") != std::string::npos) {
+		if (requestURI.find("/userAuthenticate") != std::string::npos) {
 			return new userAuthHandler(map);
 		}
-		else if (requestURI == "/test") return new FormRequestHandler;
+		if (requestURI == "/test") return new FormRequestHandler;
 
-		else if (requestURI == "/login") return new LoginRequestHandler;
+		if (requestURI == "/login") return new LoginRequestHandler;
 
-		else if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/')
+		if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/')
 			return new DirectoryHandler();
 
+//<<<<<<< HEAD
+		if (requestURI.length() > 1)
+			return new generalResourceHandler();
+//=======
 		else if (requestURI.length() > 1)
 			return new FileHandler();
+//>>>>>>> c677be32bca690c71e10a48a2b9605fa510e076f
+
 
 		return new RootHandler();
 	}

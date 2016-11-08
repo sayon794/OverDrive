@@ -24,7 +24,8 @@
 #include "Filesystem\FileBrowser.hpp"
 #include <iostream>
 #include <string>
-#include "UserIDMapper.h"
+#include "UserIDMapper.hpp"
+#include "StatePattern.hpp"
 
 using Poco::Net::ServerSocket;
 using Poco::Net::HTTPRequestHandler;
@@ -99,6 +100,8 @@ namespace Overdrive {
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 		private:
 			std::map<std::string, UserIDMapper> m;
+			//std::map<std::string, Context> states;
+			//logged_in lin;
 		};
 
 		class FormRequestHandler : public Poco::Net::HTTPRequestHandler

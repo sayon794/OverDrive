@@ -9,7 +9,7 @@
 #include "Poco/Util/OptionSet.h"
 #include "Poco/Util/HelpFormatter.h"
 #include "OverdriveRequestHandlerFactory.hpp"
-#include "UserIDMapper.h"
+#include "UserIDMapper.hpp"
 
 
 namespace Overdrive {

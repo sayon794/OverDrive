@@ -45,7 +45,8 @@
     <ClInclude Include="src\Net\OverdriveServer.hpp" />
     <ClInclude Include="src\Net\RootHandler.hpp" />
     <ClInclude Include="src\Net\Handlers.hpp" />
-    <ClInclude Include="src\Net\UserIDMapper.h" />
+    <ClInclude Include="src\Net\StatePattern.hpp" />
+    <ClInclude Include="src\Net\UserIDMapper.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BB69A37C-210D-45C2-892B-92AD9923BF9E}</ProjectGuid>

@@ -1,4 +1,5 @@
 #include "Handlers.hpp"
+#include "UserIDMapper.hpp"
 
 namespace Overdrive {
 	namespace Net {
@@ -76,8 +77,14 @@ namespace Overdrive {
 			while (fscanf(fp, "%s%s%s", tempName, tempPw, tempRoot) == 3) {
 				if (std::string(tempName) == name && std::string(tempPw) == pw) {
 					fclose(fp);
-					m[std::string(tempName) + std::string(tempPw)] = UserIDMapper(tempName,tempPw,tempRoot);
-					response.addCookie(Poco::Net::HTTPCookie(tempName, std::string(tempName) + std::string(tempPw)));
+					std::string sessionID = std::string(tempName) + std::string(tempPw);
+					
+					m[sessionID] = UserIDMapper(tempName,tempPw,tempRoot);
+					//states[sessionID] = Context();
+
+					//lin.doAction(states[sessionID]);
+
+					response.addCookie(Poco::Net::HTTPCookie(sessionID, tempRoot));
 					response.redirect(tempRoot);
 					return;
 				}
@@ -96,8 +103,6 @@ namespace Overdrive {
 				it = form.begin();
 				end = form.begin();
 				end++;
-
-				std::cout << it->second << " " << end->second;
 				loadMap(it->second, end->second, response);
 			}
 		}

@@ -48,6 +48,9 @@
     <ClCompile Include="src\Filesystem\AddFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Filesystem\FileHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Net\OverdriveServer.hpp">
@@ -83,10 +86,14 @@
     <ClInclude Include="src\Filesystem\AddFolder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="src\Net\UserIDMapper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Net\StatePattern.hpp">
+=======
+    <ClInclude Include="src\Filesystem\FileHandler.hpp">
+>>>>>>> c677be32bca690c71e10a48a2b9605fa510e076f
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

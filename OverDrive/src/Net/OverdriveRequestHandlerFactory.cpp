@@ -1,6 +1,7 @@
 #include "OverdriveRequestHandlerFactory.hpp"
 #include "Handlers.hpp"
 #include "Poco/URI.h"
+#include "Filesystem\FileHandler.hpp"
 
 namespace Overdrive {
 namespace Net {
@@ -31,8 +32,13 @@ namespace Net {
 		if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/')
 			return new DirectoryHandler();
 
+<<<<<<< HEAD
 		if (requestURI.length() > 1)
 			return new generalResourceHandler();
+=======
+		else if (requestURI.length() > 1)
+			return new FileHandler();
+>>>>>>> c677be32bca690c71e10a48a2b9605fa510e076f
 
 
 		return new RootHandler();

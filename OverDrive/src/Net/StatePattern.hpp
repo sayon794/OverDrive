@@ -1,4 +1,4 @@
-class State;
+/*class State;
 class Context {
 private:
 	State *state;
@@ -26,4 +26,4 @@ class not_logged_in : State {
 public:
 	void doAction(Context context) { context.setState(*this); }
 	bool status() { return false; }
-};
+};*/

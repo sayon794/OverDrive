@@ -32,13 +32,13 @@ namespace Net {
 		if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/')
 			return new DirectoryHandler();
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 		if (requestURI.length() > 1)
 			return new generalResourceHandler();
-=======
+//=======
 		else if (requestURI.length() > 1)
 			return new FileHandler();
->>>>>>> c677be32bca690c71e10a48a2b9605fa510e076f
+//>>>>>>> c677be32bca690c71e10a48a2b9605fa510e076f
 
 
 		return new RootHandler();

@@ -80,9 +80,9 @@ namespace Overdrive {
 					std::string sessionID = std::string(tempName) + std::string(tempPw);
 					
 					m[sessionID] = UserIDMapper(tempName,tempPw,tempRoot);
-					states[sessionID] = Context();
+					//states[sessionID] = Context();
 
-					lin.doAction(states[sessionID]);
+					//lin.doAction(states[sessionID]);
 
 					response.addCookie(Poco::Net::HTTPCookie(sessionID, tempRoot));
 					response.redirect(tempRoot);

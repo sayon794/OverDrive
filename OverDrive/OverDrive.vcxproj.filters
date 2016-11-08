@@ -68,9 +68,6 @@
     <ClInclude Include="src\Net\DirectoryHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Net\UserIDMapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -84,6 +81,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Filesystem\AddFolder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Net\UserIDMapper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Net\StatePattern.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

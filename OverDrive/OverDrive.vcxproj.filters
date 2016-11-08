@@ -48,6 +48,9 @@
     <ClCompile Include="src\Filesystem\AddFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Filesystem\FileHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Net\OverdriveServer.hpp">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Filesystem\AddFolder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Filesystem\FileHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

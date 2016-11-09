@@ -12,7 +12,7 @@ namespace Overdrive {
 
 		class Context {
 		private:
-			bool state;
+			bool state = false;
 
 		public:
 			Context() { state = 0; }

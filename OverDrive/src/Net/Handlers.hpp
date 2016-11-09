@@ -134,5 +134,10 @@ namespace Overdrive {
 		private:
 			std::string root;
 		};
+		class redirectToError : public Poco::Net::HTTPRequestHandler {
+		public:
+			redirectToError() {	}
+			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		};
 	}
 }

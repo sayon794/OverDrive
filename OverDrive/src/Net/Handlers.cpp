@@ -198,5 +198,18 @@ namespace Overdrive {
 		{
 			response.redirect(root);
 		}
+		void redirectToError::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response)
+		{
+			Poco::Net::HTMLForm form(request, request.stream());
+
+			response.setChunkedTransferEncoding(true);
+			response.setContentType("text/html");
+
+			std::ostream& ostr = response.send();
+
+			Poco::FileInputStream istr("error.html");
+			Poco::StreamCopier::copyStream(istr, ostr);
+
+		}
 }
 }

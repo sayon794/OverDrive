@@ -9,31 +9,46 @@ namespace Net {
 		Poco::URI uri(request.getURI());
 		std::string requestURI = uri.getPath();
 
-		//std::cout << requestURI << std::endl;
+		///std::cout << requestURI << std::endl;
 
 		///Add different handlers for different URI
 		//if (requestURI == "/")
-
-		if (requestURI == "/hello") return new myRequestHandler;
-		
 		if (requestURI.find("/img/") != std::string::npos) {
 			return new generalResourceHandler();
 		}
 		if (requestURI.find("/css/") != std::string::npos) {
 			return new CSSHandler();
 		}
-		if (requestURI.find("/userAuthenticate") != std::string::npos) {
-			return new userAuthHandler(map, states);
+		
+		if (requestURI == "/login") {
+			if(!CheckLoggedInStatus(request)) return new LoginRequestHandler;
+			else return new redirectToRootHandler(rootAdd);
 		}
-		if (requestURI == "/test") return new FormRequestHandler;
+		if (requestURI.find("/userAuthenticate") != std::string::npos) {
+			if (!CheckLoggedInStatus(request)) return new userAuthHandler(map, states);
+			else return new redirectToRootHandler(rootAdd);
+		}
+		
 
-		if (requestURI == "/login") return new LoginRequestHandler;
-
-		if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/')
-			return new DirectoryHandler();
-
-		if (requestURI.length() > 1)
-			return new FileHandler();
+		if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/') {
+			if (CheckLoggedInStatus(request)) {
+				std::cout << "after checking" << std::endl;
+				if(!strncmp(requestURI.c_str(), rootAdd.c_str(), rootAdd.length()))
+					return new DirectoryHandler();
+				//add 401 or whatever restriction here.
+				return new redirectToError();
+			}
+			
+		}
+		if (requestURI.length() > 1) {
+			if (CheckLoggedInStatus(request)) {
+				if (!strncmp(requestURI.c_str(), rootAdd.c_str(), rootAdd.length()))
+					return new FileHandler();
+				//add 401 or whatever restriction here.
+				return new redirectToError();
+			}
+		}
+			
 
 		if (CheckLoggedInStatus(request)) {
 			return new redirectToRootHandler(rootAdd);

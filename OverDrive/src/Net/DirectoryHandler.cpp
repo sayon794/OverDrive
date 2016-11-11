@@ -11,7 +11,7 @@
 
 namespace Overdrive {
 	namespace Net {
-
+		
 		void DirectoryHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response) {
 
 			MyPartHandler partHandler("." + root.substr(0,root.length()-1) + request.getURI());
@@ -47,7 +47,8 @@ namespace Overdrive {
 			}
 			else if (uri.getQuery().find("download") != std::string::npos)
 			{
-				filestrat = new Overdrive::Filesystem::DirectoryZipper();
+				new Overdrive::Filesystem::DirectoryZipper(uri,request,root,response);
+				return;
 			}
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader();

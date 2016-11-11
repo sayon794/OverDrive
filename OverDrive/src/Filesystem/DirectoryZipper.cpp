@@ -1,14 +1,13 @@
 #include "Filesystem\DirectoryZipper.hpp"
 #include <iostream>
+#include <fstream>
+#include "Net/Handlers.hpp"
 #include <Poco/Zip/Compress.h>
 #include <Poco/Zip/ZipCommon.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/FileStream.h>
-#include <Poco/DateTime.h>
-#include <Poco/MemoryStream.h>
-#include <fstream>
 
-void Overdrive::Filesystem::DirectoryZipper::handle(Poco::URI& uri, std::string &root, Poco::Net::HTTPServerResponse& response) {
+Overdrive::Filesystem::DirectoryZipper::DirectoryZipper(Poco::URI& uri, Poco::Net::HTTPServerRequest& request,std::string &root, Poco::Net::HTTPServerResponse& response) {
 	std::string directoryName = uri.getPath();
 	if (directoryName[directoryName.length() - 1] == '/')
 	{
@@ -31,8 +30,14 @@ void Overdrive::Filesystem::DirectoryZipper::handle(Poco::URI& uri, std::string 
 	c.addRecursive(data, Poco::Zip::ZipCommon::CL_NORMAL,true, insideZip);
 	c.close(); // MUST be done to finalize the Zip file
 	outZip.close();
-	response.sendFile(path + ".zip", "application/zip");	
-	std::cout << "Finished Zipping " << std::endl;
+	//response.sendFile(path + ".zip", "application/zip");	
+	std::cout << "Finished Zipping " << std::endl ;
+
+	//std::cout << "Path " << path.substr(1, path.length()) <<  std::endl;
+
+	Net::generalResourceHandler g;
+	request.setURI(path.substr(1,path.length()) + ".zip");
+	g.handleRequest(request, response);
 
 	Poco::File file(path + ".zip");
 	file.remove();

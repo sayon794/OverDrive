@@ -213,5 +213,10 @@ namespace Overdrive {
 			Poco::StreamCopier::copyStream(istr, ostr);
 
 		}
+		
+		void logoutHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response){
+			lout.doAction((*s)[sessionID]);
+			response.redirect("/");	
+		}
 }
 }

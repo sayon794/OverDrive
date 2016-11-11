@@ -27,6 +27,10 @@ namespace Net {
 			else return new redirectToRootHandler(rootAdd);
 		}
 
+		if (loggedIn && requestURI.find("/logout") == 0) {
+			return new logoutHandler(map, states, sessionID);
+		}
+
 		if (!loggedIn)
 			return new LoginRequestHandler;
 
@@ -61,7 +65,7 @@ namespace Net {
 		for (; it != end; it++) {
 			if (states.find(it->first) != states.end()) {
 				if (states[it->first].getState()) {
-					
+					sessionID = it->first;
 					rootAdd = it->second;
 					return true;
 				}

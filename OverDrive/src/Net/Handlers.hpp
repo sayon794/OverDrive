@@ -120,5 +120,18 @@ namespace Overdrive {
 			redirectToError() {	}
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 		};
+		class logoutHandler : public Poco::Net::HTTPRequestHandler {
+		public:
+			logoutHandler(std::map<std::string, UserIDMapper> &map,
+				std::map<std::string, Context> &states, std::string SID) {
+				m = &map; s = &states; sessionID = SID;
+			}
+			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		private:
+			std::map<std::string, UserIDMapper> *m;
+			std::map<std::string, Context> *s;
+			std::string sessionID;
+			not_logged_in lout;
+		};
 	}
 }

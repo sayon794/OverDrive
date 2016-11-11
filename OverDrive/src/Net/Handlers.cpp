@@ -17,7 +17,7 @@ namespace Overdrive {
 
 			Poco::CountingInputStream istr(stream);
 
-			Poco::FileOutputStream ostr(fileName());
+			Poco::FileOutputStream ostr(path + fileName());
 			Poco::StreamCopier::copyStream(istr, ostr);
 			_length = istr.chars();
 		}
@@ -126,7 +126,7 @@ namespace Overdrive {
 		}
 
 
-		void FormRequestHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response)
+		/*void FormRequestHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response)
 		{
 			Poco::Util::Application& app = Poco::Util::Application::instance();
 			app.logger().information("Request from " + request.clientAddress().toString());
@@ -195,7 +195,7 @@ namespace Overdrive {
 				ostr << "</p>";
 			}
 			ostr << "</body>\n";
-		}
+		}*/
 		void redirectToRootHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response)
 		{
 			response.redirect(root);

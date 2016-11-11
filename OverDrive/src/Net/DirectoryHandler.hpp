@@ -1,6 +1,7 @@
 #include "Poco/Net/HTTPRequestHandler.h"
 #include "Poco/Net/HTTPServerRequest.h"
 #include "Poco/Net/HTTPServerResponse.h"
+#include "Net/Handlers.hpp"
 
 namespace Overdrive {
 	namespace Net {

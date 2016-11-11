@@ -12,6 +12,10 @@ namespace Overdrive {
 	namespace Net {
 
 		void DirectoryHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response) {
+			
+			MyPartHandler partHandler("." + root.substr(0,root.length()-1) + request.getURI());
+			Poco::Net::HTMLForm form(request, request.stream(), partHandler);
+
 			response.setChunkedTransferEncoding(true);
 			response.setContentType("text/html");
 

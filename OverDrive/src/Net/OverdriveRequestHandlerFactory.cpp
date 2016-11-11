@@ -9,7 +9,7 @@ namespace Net {
 		Poco::URI uri(request.getURI());
 		std::string requestURI = uri.getPath();
 
-		///std::cout << requestURI << std::endl;
+		//std::cout << "requested URI " << requestURI << std::endl;
 
 		///Add different handlers for different URI
 		//if (requestURI == "/")
@@ -20,41 +20,36 @@ namespace Net {
 			return new CSSHandler();
 		}
 		
-		if (requestURI == "/login") {
-			if(!CheckLoggedInStatus(request)) return new LoginRequestHandler;
+		bool loggedIn = CheckLoggedInStatus(request);
+
+		if (requestURI.find("/userAuthenticate") == 0) {
+			if (!loggedIn) return new userAuthHandler(map, states);
 			else return new redirectToRootHandler(rootAdd);
 		}
-		if (requestURI.find("/userAuthenticate") != std::string::npos) {
-			if (!CheckLoggedInStatus(request)) return new userAuthHandler(map, states);
+
+		if (!loggedIn)
+			return new LoginRequestHandler;
+
+		/*if (requestURI == "/login") {
+			if(!loggedIn) return new LoginRequestHandler;
 			else return new redirectToRootHandler(rootAdd);
-		}
+		}*/
 		
 
-		if (requestURI.length() > 1 && requestURI[requestURI.length() - 1] == '/') {
-			if (CheckLoggedInStatus(request)) {
-				std::cout << "after checking" << std::endl;
-				if(!strncmp(requestURI.c_str(), rootAdd.c_str(), rootAdd.length()))
-					return new DirectoryHandler();
-				//add 401 or whatever restriction here.
-				return new redirectToError();
-			}
-			
+		if (requestURI.length() == 0 || requestURI[requestURI.length() - 1] == '/') {
+			return new DirectoryHandler(rootAdd);
 		}
-		if (requestURI.length() > 1) {
-			if (CheckLoggedInStatus(request)) {
-				if (!strncmp(requestURI.c_str(), rootAdd.c_str(), rootAdd.length()))
-					return new FileHandler();
-				//add 401 or whatever restriction here.
-				return new redirectToError();
-			}
-		}
-			
 
-		if (CheckLoggedInStatus(request)) {
-			return new redirectToRootHandler(rootAdd);
+		if (requestURI.length() > 1) {
+			return new FileHandler(rootAdd);
 		}
-		return new RootHandler();
+
+		//if (CheckLoggedInStatus(request)) {
+		return new redirectToRootHandler("/");
+		//}
+		//return new redirectToError();
 	}
+
 	bool OverdriveRequestHandlerFactory::CheckLoggedInStatus(const Poco::Net::HTTPServerRequest& request) {
 		Poco::Net::NameValueCollection cookies;
 

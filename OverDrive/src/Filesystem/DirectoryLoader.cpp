@@ -13,7 +13,8 @@ void Overdrive::Filesystem::DirectoryLoader::handle(Poco::URI & uri, std::string
 	while (std::getline(fstr, buffer)) {
 		if (buffer.find("</body>") != std::string::npos) {
 			//std::cout << request.getURI() << std::endl;
-			Overdrive::Filesystem::FileBrowser filebrowser(uri.getPath().substr(1, uri.getPath().length() - 2));
+			//std::cout << "path " << root + uri.getPath().substr(0, uri.getPath().length() - 1) << std::endl;
+			Overdrive::Filesystem::FileBrowser filebrowser(root.substr(1,root.length()) + uri.getPath().substr(0, uri.getPath().length() - 1));
 			ostr << filebrowser.createScript();
 		}
 		ostr << buffer << "\n";

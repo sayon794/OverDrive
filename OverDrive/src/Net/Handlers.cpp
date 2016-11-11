@@ -85,7 +85,9 @@ namespace Overdrive {
 					lin.doAction((*s)[sessionID]);
 
 					response.addCookie(Poco::Net::HTTPCookie(sessionID, tempRoot));
-					response.redirect(tempRoot);
+					//response.redirect(tempRoot);
+					response.redirect("/");
+					fclose(fp);
 					return;
 				}
 			}
@@ -96,8 +98,8 @@ namespace Overdrive {
 			
 			Poco::Net::HTMLForm form(request, request.stream());
 			
-			NameValueCollection::ConstIterator it;
-			NameValueCollection::ConstIterator end;
+			Poco::Net::NameValueCollection::ConstIterator it;
+			Poco::Net::NameValueCollection::ConstIterator end;
 			if (!form.empty())
 			{
 				it = form.begin();
@@ -126,11 +128,11 @@ namespace Overdrive {
 
 		void FormRequestHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response)
 		{
-			Application& app = Application::instance();
+			Poco::Util::Application& app = Poco::Util::Application::instance();
 			app.logger().information("Request from " + request.clientAddress().toString());
 
 			MyPartHandler partHandler;
-			HTMLForm form(request, request.stream(), partHandler);
+			Poco::Net::HTMLForm form(request, request.stream(), partHandler);
 
 			response.setChunkedTransferEncoding(true);
 			response.setContentType("text/html");
@@ -163,8 +165,8 @@ namespace Overdrive {
 			ostr << "<h2>Request</h2><p>\n";
 			ostr << "Method: " << request.getMethod() << "<br>\n";
 			ostr << "URI: " << request.getURI() << "<br>\n";
-			NameValueCollection::ConstIterator it = request.begin();
-			NameValueCollection::ConstIterator end = request.end();
+			Poco::Net::NameValueCollection::ConstIterator it = request.begin();
+			Poco::Net::NameValueCollection::ConstIterator end = request.end();
 			for (; it != end; ++it)
 			{
 				ostr << it->first << ": " << it->second << "<br>\n";

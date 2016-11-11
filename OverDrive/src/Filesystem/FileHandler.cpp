@@ -38,16 +38,17 @@ namespace Overdrive {
 				filestrat = new Overdrive::Filesystem::FileDelete();
 			else if (uri.getQuery().find("rename") != std::string::npos)
 				filestrat = new Overdrive::Filesystem::FileRename();
-			else if (uri.getQuery().find("download") != std::string::npos)
+			else /*if (uri.getQuery().find("download") != std::string::npos)*/
 			{
-				std::cout << uri.getPath() << " " << uri.getQuery() << " New Download" << std::endl;
+				//std::cout << uri.getPath() << " " << uri.getQuery() << " New Download" << std::endl;
 				generalResourceHandler g;
+				request.setURI(root + request.getURI());
 				g.handleRequest(request, response);
 				return;
 			}
-			else
-				return;
-			filestrat->handle(uri, std::string(""), response);		//add root here later instead of empty string
+			/*else
+				return;*/
+			filestrat->handle(uri, root.substr(0, root.length() - 1), response);		//add root here later instead of empty string
 
 			delete filestrat;
 		}

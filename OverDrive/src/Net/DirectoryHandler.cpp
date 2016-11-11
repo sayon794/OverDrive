@@ -43,7 +43,8 @@ namespace Overdrive {
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader();
 
-			filestrat->handle(uri, std::string(""), response);		//add root here later instead of empty string
+			//std::cout << "root: " << root << std::endl;
+			filestrat->handle(uri, root.substr(0,root.length()-1), response);		//add root here later instead of empty string
 
 			delete filestrat;
 		}

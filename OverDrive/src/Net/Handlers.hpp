@@ -27,25 +27,6 @@
 #include "UserIDMapper.hpp"
 #include "StatePattern.hpp"
 
-using Poco::Net::ServerSocket;
-using Poco::Net::HTTPRequestHandler;
-using Poco::Net::HTTPRequestHandlerFactory;
-using Poco::Net::HTTPServer;
-using Poco::Net::HTTPServerRequest;
-using Poco::Net::HTTPServerResponse;
-using Poco::Net::HTTPServerParams;
-using Poco::Net::MessageHeader;
-using Poco::Net::HTMLForm;
-using Poco::Net::NameValueCollection;
-using Poco::Util::ServerApplication;
-using Poco::Util::Application;
-using Poco::Util::Option;
-using Poco::Util::OptionSet;
-using Poco::Util::HelpFormatter;
-using Poco::CountingInputStream;
-using Poco::NullOutputStream;
-using Poco::StreamCopier;
-
 namespace Overdrive {
 	namespace Net {
 

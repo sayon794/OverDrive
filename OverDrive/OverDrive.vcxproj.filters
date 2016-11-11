@@ -1,100 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="src\Filesystem\AddFolder.cpp" />
+    <ClCompile Include="src\Filesystem\DirectoryLoader.cpp" />
+    <ClCompile Include="src\Filesystem\FileBrowser.cpp" />
+    <ClCompile Include="src\Filesystem\FileDelete.cpp" />
+    <ClCompile Include="src\Filesystem\FileHandler.cpp" />
+    <ClCompile Include="src\Filesystem\FileRename.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Net\DirectoryHandler.cpp" />
+    <ClCompile Include="src\Net\Handlers.cpp" />
+    <ClCompile Include="src\Net\OverdriveRequestHandlerFactory.cpp" />
+    <ClCompile Include="src\Net\OverdriveServer.cpp" />
+    <ClCompile Include="src\Net\RootHandler.cpp" />
+    <ClCompile Include="src\Filesystem\DirectoryZipper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Net\OverdriveServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Net\OverdriveRequestHandlerFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Net\RootHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Filesystem\FileBrowser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Net\Handlers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Net\DirectoryHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Filesystem\FileDelete.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Filesystem\DirectoryLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Filesystem\FileRename.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Filesystem\AddFolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Filesystem\FileHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Net\OverdriveServer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Net\OverdriveRequestHandlerFactory.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Net\RootHandler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Filesystem\FileBrowser.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Net\Handlers.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Net\DirectoryHandler.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Filesystem\FileDelete.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Filesystem\DirectoryLoader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Filesystem\FileRename.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Filesystem\AddFolder.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="src\Net\UserIDMapper.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Net\StatePattern.hpp">
-=======
-    <ClInclude Include="src\Filesystem\FileHandler.hpp">
->>>>>>> c677be32bca690c71e10a48a2b9605fa510e076f
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="src\Filesystem\AddFolder.hpp" />
+    <ClInclude Include="src\Filesystem\DirectoryLoader.hpp" />
+    <ClInclude Include="src\Filesystem\FileDelete.hpp" />
+    <ClInclude Include="src\Filesystem\FileHandler.hpp" />
+    <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp" />
+    <ClInclude Include="src\Filesystem\FileBrowser.hpp" />
+    <ClInclude Include="src\Filesystem\FileRename.hpp" />
+    <ClInclude Include="src\Net\DirectoryHandler.hpp" />
+    <ClInclude Include="src\Net\OverdriveRequestHandlerFactory.hpp" />
+    <ClInclude Include="src\Net\OverdriveServer.hpp" />
+    <ClInclude Include="src\Net\RootHandler.hpp" />
+    <ClInclude Include="src\Net\Handlers.hpp" />
+    <ClInclude Include="src\Net\StatePattern.hpp" />
+    <ClInclude Include="src\Net\UserIDMapper.hpp" />
+    <ClInclude Include="src\Filesystem\DirectoryZipper.hpp" />
   </ItemGroup>
 </Project>

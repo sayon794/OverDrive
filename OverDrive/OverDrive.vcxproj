@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Filesystem\AddFolder.cpp" />
     <ClCompile Include="src\Filesystem\DirectoryLoader.cpp" />
+    <ClCompile Include="src\Filesystem\DirectoryZipper.cpp" />
     <ClCompile Include="src\Filesystem\FileBrowser.cpp" />
     <ClCompile Include="src\Filesystem\FileDelete.cpp" />
     <ClCompile Include="src\Filesystem\FileHandler.cpp" />
@@ -35,6 +36,7 @@
   <ItemGroup>
     <ClInclude Include="src\Filesystem\AddFolder.hpp" />
     <ClInclude Include="src\Filesystem\DirectoryLoader.hpp" />
+    <ClInclude Include="src\Filesystem\DirectoryZipper.hpp" />
     <ClInclude Include="src\Filesystem\FileDelete.hpp" />
     <ClInclude Include="src\Filesystem\FileHandler.hpp" />
     <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp" />
@@ -104,11 +106,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src;$(ProjectDir)\Poco\Foundation\include;$(ProjectDir)\Poco\JSON\include;$(ProjectDir)\Poco\Net\include;$(ProjectDir)\Poco\Util\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src;$(ProjectDir)\Poco\Zip\include;$(ProjectDir)\Poco\Foundation\include;$(ProjectDir)\Poco\JSON\include;$(ProjectDir)\Poco\Net\include;$(ProjectDir)\Poco\Util\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)\Poco\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>PocoFoundationd.lib;PocoNetd.lib;PocoUtild.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PocoZipd.lib;PocoFoundationd.lib;PocoNetd.lib;PocoUtild.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

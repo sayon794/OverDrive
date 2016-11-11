@@ -2,6 +2,7 @@
 #include "Poco/FileStream.h"
 #include "Poco/Exception.h"
 #include "Filesystem/DirectoryLoader.hpp"
+#include "Filesystem/DirectoryZipper.hpp"
 #include "Filesystem/FileDelete.hpp"
 #include "Filesystem/FileRename.hpp"
 #include "Filesystem/AddFolder.hpp"
@@ -12,7 +13,7 @@ namespace Overdrive {
 	namespace Net {
 
 		void DirectoryHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response) {
-			
+
 			MyPartHandler partHandler("." + root.substr(0,root.length()-1) + request.getURI());
 			Poco::Net::HTMLForm form(request, request.stream(), partHandler);
 
@@ -29,13 +30,13 @@ namespace Overdrive {
 			for (; it != end; it++) {
 				std::cout << it->first << " " << it->second << std::endl;
 			}
-			
+
 			Poco::URI uri(request.getURI());
 
 			//std::cout << uri.getPath() << " " << uri.getQuery() << std::endl;
 
 			Overdrive::Filesystem::FileHandlerStrategy* filestrat;
-			
+
 			if (uri.getQuery().find("delete") != std::string::npos)
 				filestrat = new Overdrive::Filesystem::FileDelete();
 			else if (uri.getQuery().find("rename") != std::string::npos)
@@ -43,6 +44,10 @@ namespace Overdrive {
 			else if (uri.getQuery().find("folder-name") != std::string::npos)
 			{
 				filestrat = new Overdrive::Filesystem::AddFolder();
+			}
+			else if (uri.getQuery().find("download") != std::string::npos)
+			{
+				filestrat = new Overdrive::Filesystem::DirectoryZipper();
 			}
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader();

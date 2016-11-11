@@ -21,11 +21,14 @@ void Overdrive::Filesystem::DirectoryZipper::handle(Poco::URI& uri, std::string 
 	std::cout << "Path "<< path << std::endl;				// ./52/ZipTest
 
 	std::ofstream outZip(path+".zip", std::ios::binary);	//Name of The Zip
-	Poco::Zip::Compress c(outZip,false);
-	Poco::Path data(path+"/");
+	Poco::Zip::Compress c(outZip,true);
+	Poco::Path data(path);
 	data.makeDirectory();
 	std::cout << "Made Directory " << std::endl;
-	c.addRecursive(data, Poco::Zip::ZipCommon::CL_NORMAL,false, directoryName);
+
+	std::string insideZip = directoryName.substr(directoryName.find_last_of('/') + 1,directoryName.length());
+
+	c.addRecursive(data, Poco::Zip::ZipCommon::CL_NORMAL,true, insideZip);
 	c.close(); // MUST be done to finalize the Zip file
 	outZip.close();
 	response.sendFile(path + ".zip", "application/zip");	

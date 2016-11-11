@@ -492,8 +492,7 @@
 <nav id="context-menu" class="context-menu">
     <ul class="context-menu__items">
         <li class="context-menu__item">
-            <a href="" class="context-menu__link" data-action="download"><i class="file-dl"></i>
-                Download</a>
+            <a href="" class="context-menu__link" data-action="download"><i class="file-dl"></i>Download</a>
         </li>
         <li class="context-menu__item">
             <a href="" class="context-menu__link" data-action="rename"><i class="file-edit"></i> Rename</a>
@@ -631,9 +630,33 @@
                 var clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
 
                 if (clickeElIsLink) {
-                    e.preventDefault();
-                    //console.log("clicked with:" + clickeElIsLink);
-                    menuItemListener(clickeElIsLink);
+
+                    // only for file download
+                    if(!fileItemInContext.getAttribute("data-id") && clickeElIsLink.getAttribute("data-action")=="download") {
+                        //fileItemInContext.href =  clickeElIsLink;
+
+                        e.preventDefault();
+
+                        var slash = fileItemInContext.href.lastIndexOf("/");
+                        var fileName = fileItemInContext.href.substr(slash+1);
+                        console.log(fileName);
+
+                        fileItemInContext.setAttribute("download", fileName);
+                        console.log("dl: " + fileItemInContext.href);
+
+                        fileItemInContext.click();
+                    }
+
+                    else {
+                        e.preventDefault();
+                        console.log("clicked with:" + clickeElIsLink);
+                        menuItemListener(clickeElIsLink);
+
+                    }
+
+
+
+
 
                 }
                 else {

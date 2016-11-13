@@ -14,7 +14,9 @@ namespace Overdrive {
 
 		void DirectoryHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response) {
 
-			MyPartHandler partHandler("." + root.substr(0,root.length()-1) + request.getURI());
+			Poco::URI uri(request.getURI());
+
+			MyPartHandler partHandler("." + root.substr(0,root.length()-1) + uri.getPath());
 			Poco::Net::HTMLForm form(request, request.stream(), partHandler);
 
 			response.setChunkedTransferEncoding(true);
@@ -30,9 +32,6 @@ namespace Overdrive {
 			for (; it != end; it++) {
 				std::cout << it->first << " " << it->second << std::endl;
 			}
-
-			Poco::URI uri(request.getURI());
-
 			//std::cout << uri.getPath() << " " << uri.getQuery() << std::endl;
 
 			Overdrive::Filesystem::FileHandlerStrategy* filestrat;

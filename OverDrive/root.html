@@ -15,6 +15,70 @@
 
 
     <!--file browser js-->
+    <script type="text/javascript">
+        function folder_chain() {
+            var chain_element = document.getElementById("chain");
+
+            var directory = window.location.href;
+
+            console.log(directory);
+
+            directory = directory.replace("http://","");
+            console.log(directory);
+
+
+            //directory = directory.replace("%20", " ");
+            //console.log(directory);
+
+
+
+            var slashIndex = directory.indexOf('/');
+            directory = directory.substr(slashIndex+1);
+            console.log(directory);
+
+
+            //directory = directory.replace("/", " > ");
+            //directory = directory.split("/").join(" > ");
+
+            var directories = directory.split("/");
+            // lenght - 1 ta element
+            var url="";
+
+            console.log("dir len="+ directories.length);
+
+            for(var i=0; i<directories.length-1; i++) {
+
+                url = "/";
+
+                for(var j=0; j<=i; j++)
+                    url += directories[j]+"/";
+
+                console.log("href: "+ url);
+
+                var elmnt = directories[i].split("%20").join(" ");
+
+                console.log("element: " + elmnt );
+
+                var folderLink = document.createElement("a");
+                folderLink.href = url;
+                folderLink.innerText = elmnt+" > ";
+
+                chain_element.appendChild(folderLink);
+            }
+
+            console.log(directories);
+
+
+            //chain_element.innerText = "root > "+ directory;
+            //console.log(chain_element.innerText);
+
+
+        }
+
+    </script>
+
+
+
     <script>
 
         var root;
@@ -200,6 +264,22 @@
 
     <style>
 
+        .underlined_title {
+            width: 20%;
+            padding-bottom: 3px;
+            border-bottom: 1px solid #ddd;
+            color: #1c699f;
+        }
+
+        .buttoned {
+            background-color: #0c91e5;
+            color: white;
+        }
+
+        .greybox {
+            background-color: #eee;
+            color: #3c3c3c;
+        }
 
         .files {
             list-style: none;
@@ -258,21 +338,44 @@
         .context-menu__link:hover {
             color: #fff;
             background-color: #0066aa;
-        }-->
+        }
 
         table {
             border-collapse: collapse;
+            width: 70%;
+            float: right;
+            margin-right: 3%;
+        }
+        
+        #chain {
+            padding: 8px;
+            margin-top: 8px;
+            margin-left: 8px;
+            margin-bottom: 20px;
+            width: 70%;
+            float: right;
+            margin-right: 3%;
+        }
+
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-            cursor: pointer;
-            -webkit-padding-start: 2em;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #676767;
         }
 
-        td.detailsColumn {
-            -webkit-padding-start: 2em;
-            text-align: start;
-            white-space: nowrap;
+        th div:hover {
+            cursor: hand;
+        }
+
+        tbody tr:hover{
+            background-color:#f5f5f5
         }
 
         a.icon {
@@ -281,7 +384,6 @@
         }
 
         a.icon:hover {
-            text-decoration: underline;
         }
 
         a.file {
@@ -311,21 +413,20 @@
 <div class="page-wrapper">
 
 
-    <div class="page-wrapper-row">
-
+    <div class="page-wrapper-row" >
         <div class="page-wrapper-top">
 
             <div class="page-header">
                 <div class="page-header-top">
-                    <div class="container">
+                    <div class="container" >
                         <div class="page-logo">
-                            <a href=""><img class="logo-default" src="/img/logo.png" alt="OverDrive"></a>
+                            <a href="/"><img class="logo-default" src="/img/logo.png" alt="OverDrive"></a>
                         </div>
 
                         <div class="top-menu">
                             <ul class="nav navbar-nav pull-right">
                                 <li>
-                                    <a href="">Account</a>
+                                    <a href="">Welcome, tausif!</a>
                                 </li>
                                 <li>
                                     <a href="/logout">Logout</a>
@@ -341,7 +442,11 @@
                             <ul class="nav navbar-nav">
 
                                 <li>
-                                    <a href="">My Files</a>
+                                    <a href="/">My Files</a>
+                                </li>
+
+                                <li>
+                                    <a href="/">My Account</a>
                                 </li>
 
 
@@ -356,49 +461,56 @@
     </div>
 
 
-    <div class="page-wrapper-row full-height" style="min-height: 505.778px;">
+    <div class="page-wrapper-row full-height">
         <div class="page-wrapper-middle">
-            <div class="page-container">
-                <div class="page-content-wrapper">
+            <div class="page-container" >
 
-                </div>
                 <div class="page-content">
                     <div class="container">
-                        <!--My things here-->
 
-                        <h3>My Files</h3>
-                        <h5>Right click for more options</h5>
+                        <!```````````````````````````````````````My things here``````````````````````````````````>
+
+                        <div id="chain">
+                            <a href="/">Root > </a>
+                        </div>
+
+                        <script>
+                            folder_chain();
+                        </script>
+
 
                         <h1 id="header"></h1>
 
                         <table>
                             <thead>
-                            <tr class="header" id="theader">
-                                <th onclick="javascript:sortTable(0);">Name</th>
-                                <th class="detailsColumn" onclick="javascript:sortTable(1);">Size</th>
-                                <th class="detailsColumn" onclick="javascript:sortTable(2);">Date Modified</th>
-                            </tr>
+                                <tr class="header" id="theader">
+                                    <th class="detailsColumn" onclick="javascript:sortTable(0);"><div>Name</div></th>
+                                    <th class="detailsColumn" onclick="javascript:sortTable(1);"><div>File Size</div></th>
+                                    <th class="detailsColumn" onclick="javascript:sortTable(2);"><div>Modified</div></th>
+                                </tr>
                             </thead>
                             <tbody id="tbody" class="files">
+
                             </tbody>
                         </table>
 
 
-                        <h3>Upload</h3>
+                        <h5 class="underlined_title">Upload</h5>
                         <form method="POST" enctype="multipart/form-data">
-                            <input type="file" name="file" size="31">
+                            <input type="file" name="file">
                             <input type="submit" value="Upload">
                         </form>
 
 
+
+                        <h5 class="underlined_title">or</h5>
+                        <button onclick="dispatcher()">Add a new folder</button>
                         <br>
                         <br>
 
 
-
-                        <button onclick="dispatcher()">Add new folder</button>
-                        <br>
-                        <br>
+                        <h5 class="underlined_title">Tips</h5>
+                        <h5>Right click on files for more options!</h5>
 
                         <script>
                             function dispatcher() {
@@ -454,7 +566,7 @@
                         <ul>
 
                             <li>
-                                <a href="https://mehamasum.com/">About the team</a>
+                                <a href="/about.html">About the team</a>
                             </li>
 
                             <li>

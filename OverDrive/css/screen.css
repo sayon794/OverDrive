@@ -45780,7 +45780,7 @@ body, html {
 }
 
 .page-wrapper .page-wrapper-middle {
-    background: #eff3f8;
+    background: #fff;
     width: 100%;
     display: table-cell;
     height: 100%
@@ -45792,7 +45792,7 @@ body, html {
 }
 
 .page-container {
-    clear: both
+    clear: both;
 }
 
 .page-head {

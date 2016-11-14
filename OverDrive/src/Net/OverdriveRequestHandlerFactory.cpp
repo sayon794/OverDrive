@@ -16,6 +16,9 @@ namespace Net {
 		if (requestURI.find("/img/") != std::string::npos) {
 			return new generalResourceHandler();
 		}
+		if (requestURI.find(".html") != std::string::npos) {
+			return new generalResourceHandler();
+		}
 		if (requestURI.find("/css/") != std::string::npos) {
 			return new CSSHandler();
 		}

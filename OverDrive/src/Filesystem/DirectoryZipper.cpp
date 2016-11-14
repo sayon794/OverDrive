@@ -31,20 +31,9 @@ Overdrive::Filesystem::DirectoryZipper::DirectoryZipper(Poco::URI& uri, Poco::Ne
 	c.close(); // MUST be done to finalize the Zip file
 	outZip.flush();
 	outZip.close();
-<<<<<<< HEAD
 	//std::cout << "should send file " << path << ".zip" << std::endl;
 	//response.sendFile(path + ".zip", "application/zip");	
 	//std::cout << "Finished Zipping " << std::endl;
-=======
-	//response.sendFile(path + ".zip", "application/zip");	
-	std::cout << "Finished Zipping " << std::endl ;
-
-	//std::cout << "Path " << path.substr(1, path.length()) <<  std::endl;
-
-	Net::generalResourceHandler g;
-	request.setURI(path.substr(1,path.length()) + ".zip");
-	g.handleRequest(request, response);
->>>>>>> origin/master
 
 	response.setContentType("Binary Data");
 	std::ostream& ostr = response.send();

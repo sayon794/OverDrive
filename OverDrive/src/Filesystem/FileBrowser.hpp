@@ -16,7 +16,7 @@ namespace Filesystem {
 		~FileBrowser() {}
 
 		std::string createScript();
-
+		std::string createFileDescription(Poco::File file);
 	private:
 		std::vector<std::string> dirlist;
 		std::string currdir;	//working directory relative to server root

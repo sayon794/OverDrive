@@ -39,7 +39,7 @@ namespace Filesystem {
 
 			std::string details = std::to_string(file.getSize()) + createFileDescription(file);
 			res += details;
-			std::cout << res << std::endl;
+			//std::cout << res << std::endl;
 		}
 
 		return res;
@@ -48,7 +48,7 @@ namespace Filesystem {
 	std::string FileBrowser::createFileDescription(Poco::File file)
 	{
 		std::string output="";
-		double size = (double)file.getSize();
+		double size = (double)this->getSize(file);
 		std::string unit = "B";
 		if (size > 1024 * 1024)
 		{
@@ -75,6 +75,29 @@ namespace Filesystem {
 		output += std::to_string(modifiedtime.epochTime())+", \" "+ s+"\"); </script>\n";
 
 		return output;
+	}
+
+	long long int FileBrowser::getTotalSize()
+	{
+		long long int size = 0;
+		for (auto filename : dirlist) {
+				Poco::File file(currdir + "/" + filename);
+				size += this->getSize(file);
+		}
+		return size;
+	}
+
+	long long int FileBrowser::getSize(Poco::File file) {
+		std::string filename = file.path();
+		if (file.isFile())
+			return file.getSize();
+		else if (file.isDirectory()) {
+			FileBrowser fb(filename);
+			auto size = fb.getTotalSize();
+			std::cout << filename << " has size " << size << std::endl;
+			return size;
+		}
+		return 0;
 	}
 }
 }

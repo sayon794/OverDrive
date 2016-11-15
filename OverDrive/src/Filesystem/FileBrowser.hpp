@@ -17,6 +17,8 @@ namespace Filesystem {
 
 		std::string createScript();
 		std::string createFileDescription(Poco::File file);
+		long long int getTotalSize();
+		long long int getSize(Poco::File file);
 	private:
 		std::vector<std::string> dirlist;
 		std::string currdir;	//working directory relative to server root

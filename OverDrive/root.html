@@ -121,8 +121,6 @@
                     // i have not decided yet
                     name = name + "/";
                     url = url + "/";
-                    size = 0;
-                    size_string = "";
                 }
 
                 else {
@@ -337,6 +335,16 @@
             document.getElementById("username_block").innerText = "Welcome, "+username+"!";
         }
     </script>
+    <script>
+        //both param in MB
+        function display_storage(used, given) {
+            used = Math.round(used * 100)/100;
+            document.getElementById("fill_text").innerText = used+" MB of "+given+" MB is used";
+            var parentage = (used/given * 100);
+            document.getElementById("fill_bar").style.width=parentage+"%";
+        }
+    </script>
+
 
     <style>
 
@@ -595,24 +603,14 @@
                             <br>
                             <br>
 
+                            <!--STORAGE-->
                             <h5 class="underlined_title">Storage</h5>
-                            <h5> 20 MB of 100 MB is used</h5>
+                            <h5 id="fill_text"> 20 MB of 100 MB is used</h5>
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  style="width: 100%; height: 50px"
-
                                  xmlns:xlink="http://www.w3.org/1999/xlink">
-
-
-                                <rect height="20"
-                                      style="fill: grey; width:100%">
-                                </rect>
-
-
-                                <rect height="20"
-                                      style="fill: #444d58; width:80%">
-                                </rect>
-
-
+                                <rect height="20" style="fill: lightgrey; width:100%"></rect>
+                                <rect height="20" id="fill_bar" style="fill: #f6e487; width:80%"></rect>
                             </svg>
 
                             <h5 class="underlined_title">Tips</h5>
@@ -1043,11 +1041,21 @@
 </body>
 
 <script>
+
+    // sayon, comment out display_storage() and display_user()
+
+    //storage ->in MB!!
+    display_storage(20.5959595, 100);
+
     //display username
     display_user("meha");
 
+
+    // dont touch this
     //sort
     sortTable(0);
+
+
 </script>
 
 </html>

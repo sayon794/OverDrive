@@ -37,7 +37,7 @@ namespace Filesystem {
 			else
 				res += "0, ";
 
-			std::string details = std::to_string(file.getSize()) + createFileDescription(file);
+			std::string details = std::to_string(this->getSize(file)) + createFileDescription(file);
 			res += details;
 			//std::cout << res << std::endl;
 		}

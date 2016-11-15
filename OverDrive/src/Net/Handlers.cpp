@@ -1,5 +1,7 @@
 #include "Handlers.hpp"
 #include "UserIDMapper.hpp"
+#include "Filesystem/FileBrowser.hpp"
+#include <cstdlib>
 
 namespace Overdrive {
 	namespace Net {
@@ -14,12 +16,26 @@ namespace Overdrive {
 				_name = params.get("name", "(unnamed)");
 				_fileName = params.get("filename", "(unnamed)");
 			}
-
+			
 			Poco::CountingInputStream istr(stream);
 
 			Poco::FileOutputStream ostr(path + fileName());
 			Poco::StreamCopier::copyStream(istr, ostr);
-			_length = istr.chars();
+
+			ostr.flush(); ostr.close();
+
+			long long int size = istr.chars();
+			Overdrive::Filesystem::FileBrowser fb(root);
+			long long int already = fb.getTotalSize();
+
+			std::cout << path + fileName() << std::endl;
+			std::cout << already << " " << size << std::endl;
+
+			if ((already + size) > (SIZELIMIT * 1024 * 1024)) {
+				Poco::File file(path + fileName());
+				file.remove();							// :)
+			}
+
 		}
 
 		void CSSHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {

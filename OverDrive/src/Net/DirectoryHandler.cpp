@@ -16,7 +16,8 @@ namespace Overdrive {
 
 			Poco::URI uri(request.getURI());
 
-			MyPartHandler partHandler("." + root.substr(0,root.length()-1) + uri.getPath());
+			MyPartHandler partHandler("." + root.substr(0,root.length()-1) + uri.getPath(),root.substr(1, root.length() - 1));
+			///send "." + "/root" + "/uri" and "root"
 			Poco::Net::HTMLForm form(request, request.stream(), partHandler);
 
 			response.setChunkedTransferEncoding(true);
@@ -29,9 +30,9 @@ namespace Overdrive {
 			Poco::Net::NameValueCollection::ConstIterator it = cookies.begin();
 			Poco::Net::NameValueCollection::ConstIterator end = cookies.end();
 
-			for (; it != end; it++) {
+			/*for (; it != end; it++) {
 				std::cout << it->first << " " << it->second << std::endl;
-			}
+			}*/
 			//std::cout << uri.getPath() << " " << uri.getQuery() << std::endl;
 
 			Overdrive::Filesystem::FileHandlerStrategy* filestrat;

@@ -94,7 +94,7 @@ namespace Filesystem {
 		else if (file.isDirectory()) {
 			FileBrowser fb(filename);
 			auto size = fb.getTotalSize();
-			std::cout << filename << " has size " << size << std::endl;
+			//std::cout << filename << " has size " << size << std::endl;
 			return size;
 		}
 		return 0;

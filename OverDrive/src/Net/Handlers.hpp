@@ -39,6 +39,8 @@ namespace Overdrive {
 
 			MyPartHandler(const std::string& path) : _length(0), path(path) {}
 
+			MyPartHandler(const std::string& path, const std::string& root) : _length(0), path(path), root(root) {}
+
 			void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream);
 			int length() const { return _length; }
 
@@ -54,6 +56,7 @@ namespace Overdrive {
 			std::string _name;
 			std::string _fileName;
 			std::string path;
+			std::string root;
 		};
 
 		class CSSHandler : public Poco::Net::HTTPRequestHandler {

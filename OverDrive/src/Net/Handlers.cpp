@@ -88,14 +88,19 @@ namespace Overdrive {
 			FILE* fp;
 			fp = fopen("mapping.txt", "r");
 			char tempName[100];
+			char tempRName[100];
 			char tempPw[100];
 			char tempRoot[100];
 			while (fscanf(fp, "%s%s%s", tempName, tempPw, tempRoot) == 3) {
+				fgets(tempRName, 32, fp);
+				tempRName[strlen(tempRName) - 1] = 0;
+				printf("%s %s %s %s\n", tempName, tempRName, tempPw, tempRoot);
 				if (std::string(tempName) == name && std::string(tempPw) == pw) {
 					fclose(fp);
+
 					std::string sessionID = std::string(tempName) + std::string(tempPw);
 					
-					(*m)[sessionID] = UserIDMapper(tempName,tempPw,tempRoot);
+					(*m)[sessionID] = UserIDMapper(tempName,tempPw,tempRoot,tempRName);
 					(*s)[sessionID] = Context();
 
 					lin.doAction((*s)[sessionID]);
@@ -233,6 +238,63 @@ namespace Overdrive {
 		void logoutHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response){
 			lout.doAction((*s)[sessionID]);
 			response.redirect("/");	
+		}
+		void signupHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response)
+		{
+			Poco::Net::HTMLForm form(request, request.stream());
+
+			response.setChunkedTransferEncoding(true);
+			response.setContentType("text/html");
+
+			std::ostream& ostr = response.send();
+
+			Poco::FileInputStream istr("signup.html");
+			Poco::StreamCopier::copyStream(istr, ostr);
+		}
+		void setAccountHandler::handleRequest(Poco::Net::HTTPServerRequest & request, Poco::Net::HTTPServerResponse & response)
+		{
+			Poco::Net::HTMLForm form(request, request.stream());
+
+			Poco::Net::NameValueCollection::ConstIterator it;
+			Poco::Net::NameValueCollection::ConstIterator end;
+
+			std::string name;
+			std::string roll;
+			std::string batch;
+			std::string password;
+			std::string username;
+			std::string root;
+			if (!form.empty())
+			{
+				it = form.begin();
+				
+				name = it->second; it++;
+				batch = it->second; it++;
+				roll = it->second; it++;
+				password = it->second; it++;
+
+				username = roll + "_" + batch;
+
+				root = "/" + username + "/";
+
+				FILE *fp = fopen("mapping.txt", "a");
+
+				fprintf(fp, "%s %s /%s/ %s\n", username.c_str(), password.c_str(), username.c_str(), name.c_str());
+				fclose(fp);
+
+				std::string sessionID = std::string(username) + std::string(password);
+
+				(*m)[sessionID] = UserIDMapper(username, password, root, name);
+				(*s)[sessionID] = Context();
+
+				lin.doAction((*s)[sessionID]);
+
+				response.addCookie(Poco::Net::HTTPCookie(sessionID, root));
+
+				Poco::File file(username);
+				file.createDirectory();
+			}
+			response.redirect("/");
 		}
 }
 }

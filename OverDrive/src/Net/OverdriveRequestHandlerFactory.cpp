@@ -33,6 +33,14 @@ namespace Net {
 		if (loggedIn && requestURI.find("/logout") == 0) {
 			return new logoutHandler(map, states, sessionID);
 		}
+		if (!loggedIn && requestURI.find("/signup") == 0) {
+			return new signupHandler();
+		}
+
+		if (requestURI.find("/setAccount") == 0) {
+			if (!loggedIn) return new setAccountHandler(map, states);
+			else return new redirectToRootHandler(rootAdd);
+		}
 
 		if (!loggedIn)
 			return new LoginRequestHandler;
@@ -76,7 +84,7 @@ namespace Net {
 				if (states[it->first].getState()) {
 					sessionID = it->first;
 					rootAdd = it->second;
-					username = map[sessionID].getUserName();
+					username = map[sessionID].getName();
 					return true;
 				}
 			}

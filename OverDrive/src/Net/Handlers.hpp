@@ -90,20 +90,35 @@ namespace Overdrive {
 			logged_in lin;
 		};
 
-		class FormRequestHandler : public Poco::Net::HTTPRequestHandler
-			/// Return a HTML document with the current date and time.
-		{
+		class setAccountHandler : public Poco::Net::HTTPRequestHandler {
 		public:
-			FormRequestHandler() {}
-
+			setAccountHandler(std::map<std::string, UserIDMapper> &map,
+				std::map<std::string, Context> &states) {
+				m = &map; s = &states;
+			}
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		private:
+			std::map<std::string, UserIDMapper> *m;
+			std::map<std::string, Context> *s;
+			logged_in lin;
 		};
 
+
+		
 		class LoginRequestHandler : public Poco::Net::HTTPRequestHandler
 			
 		{
 		public:
 			LoginRequestHandler() {}
+
+			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
+		};
+
+		class signupHandler : public Poco::Net::HTTPRequestHandler
+
+		{
+		public:
+			signupHandler() {}
 
 			void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response);
 		};

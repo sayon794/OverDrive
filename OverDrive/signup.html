@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 
@@ -31,7 +31,7 @@
 
 	<div class="content">
 
-		<form class="login-form" action="authHandler.php" method="POST" novalidate="">
+		<form class="login-form" action="setAccount" method="POST" novalidate="">
 			<h3 class="form-title font-dark">New Account</h3>
 			<br>
 			<div class="form-group">
@@ -39,16 +39,12 @@
 					value="" minlength="2" maxlength="64" required="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAfBJREFUWAntVk1OwkAUZkoDKza4Utm61iP0AqyIDXahN2BjwiHYGU+gizap4QDuegWN7lyCbMSlCQjU7yO0TOlAi6GwgJc0fT/fzPfmzet0crmD7HsFBAvQbrcrw+Gw5fu+AfOYvgylJ4TwCoVCs1ardYTruqfj8fgV5OUMSVVT93VdP9dAzpVvm5wJHZFbg2LQ2pEYOlZ/oiDvwNcsFoseY4PBwMCrhaeCJyKWZU37KOJcYdi27QdhcuuBIb073BvTNL8ln4NeeR6NRi/wxZKQcGurQs5oNhqLshzVTMBewW/LMU3TTNlO0ieTiStjYhUIyi6DAp0xbEdgTt+LE0aCKQw24U4llsCs4ZRJrYopB6RwqnpA1YQ5NGFZ1YQ41Z5S8IQQdP5laEBRJcD4Vj5DEsW2gE6s6g3d/YP/g+BDnT7GNi2qCjTwGd6riBzHaaCEd3Js01vwCPIbmWBRx1nwAN/1ov+/drgFWIlfKpVukyYihtgkXNp4mABK+1GtVr+SBhJDbBIubVw+Cd/TDgKO2DPiN3YUo6y/nDCNEIsqTKH1en2tcwA9FKEItyDi3aIh8Gl1sRrVnSDzNFDJT1bAy5xpOYGn5fP5JuL95ZjMIn1ya7j5dPGfv0A5eAnpZUY3n5jXcoec5J67D9q+VuAPM47D3XaSeL4AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
 			</div>
 			<div class="form-group">
-				<input type="email" name="batch" class="form-control form-control-solid placeholder-no-fix" id="inpBatch" placeholder="Batch"
+				<input type="text" name="batch" class="form-control form-control-solid placeholder-no-fix" id="inpBatch" placeholder="Batch"
 					value="" required="">
 			</div>
 			<div class="form-group">
-				<input type="email" name="roll" class="form-control form-control-solid placeholder-no-fix" id="inpRoll" placeholder="Roll"
+				<input type="text" name="roll" class="form-control form-control-solid placeholder-no-fix" id="inpRoll" placeholder="Roll"
 					   value="" required="">
-			</div>
-			<div class="form-group">
-				<input type="text" name="handle" class="form-control form-control-solid placeholder-no-fix" id="inpHandle" placeholder="Handle"
-					value="" minlength="6" maxlength="14" pattern="^[a-zA-Z][a-zA-Z0-9._]+$" required="">
 			</div>
 			<div class="form-group">
 				<input type="password" name="password" class="form-control form-control-solid placeholder-no-fix" id="inpPassword" placeholder="Password"

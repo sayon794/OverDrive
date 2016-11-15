@@ -7,12 +7,13 @@ namespace Overdrive {
 	namespace Net {
 		class DirectoryHandler : public Poco::Net::HTTPRequestHandler {
 		public:
-			DirectoryHandler(std::string &root) { this->root = root; }
+			DirectoryHandler(const std::string &_root, const std::string &_name) : root(_root),username(_name) {}
 
 			void handleRequest(Poco::Net::HTTPServerRequest &request, Poco::Net::HTTPServerResponse &response);
 
 		private:
 			std::string root;
+			std::string username;
 		};
 	}
 }

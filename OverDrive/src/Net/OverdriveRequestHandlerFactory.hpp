@@ -27,6 +27,7 @@ namespace Net {
 		std::map<std::string, Context> states;
 		std::string rootAdd = "";
 		std::string sessionID = "";
+		std::string username = "";
 	};
 
 

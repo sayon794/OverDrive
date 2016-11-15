@@ -50,7 +50,7 @@ namespace Net {
 		if (!file.exists()) return new redirectToError();
 
 		if (requestURI.length() == 0 || requestURI[requestURI.length() - 1] == '/') {
-			return new DirectoryHandler(rootAdd);
+			return new DirectoryHandler(rootAdd,username);
 		}
 
 		if (requestURI.length() > 1) {
@@ -76,6 +76,7 @@ namespace Net {
 				if (states[it->first].getState()) {
 					sessionID = it->first;
 					rootAdd = it->second;
+					username = map[sessionID].getUserName();
 					return true;
 				}
 			}

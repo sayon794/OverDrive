@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Poco\File.h"
-#include "Poco\Path.h"
+#include "Poco/File.h"
+#include "Poco/Path.h"
+#include "Net/Handlers.hpp"
 #include <vector>
 #include <string>
 #include <memory>

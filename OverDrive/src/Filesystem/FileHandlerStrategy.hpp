@@ -3,6 +3,7 @@
 #include <string>
 #include <Poco/URI.h>
 #include <Poco/Net/HTTPServerResponse.h>
+#include "Net/Handlers.hpp"
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <ostream>

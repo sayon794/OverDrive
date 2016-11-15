@@ -27,6 +27,8 @@
 #include "UserIDMapper.hpp"
 #include "StatePattern.hpp"
 
+#define SIZELIMIT 10
+
 namespace Overdrive {
 	namespace Net {
 

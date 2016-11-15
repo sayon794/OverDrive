@@ -9,7 +9,11 @@ namespace Overdrive {
 namespace Filesystem {
 	class DirectoryLoader : public FileHandlerStrategy {
 		// Inherited via FileHandlerStrategy
+	public:
+		DirectoryLoader(const std::string &_name) : username(_name) {}
 		virtual void handle(Poco::URI & uri, std::string & root, Poco::Net::HTTPServerResponse & response) override;
+	private:
+		std::string username;
 	};
 }
 }

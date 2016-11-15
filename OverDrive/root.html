@@ -208,25 +208,92 @@
         }
 
         function sortTable(column) {
+
+            var col0= document.getElementById("col0");
+            var col1= document.getElementById("col1");
+            var col2= document.getElementById("col2");
+
+            if(column==0) {
+                col0.style.textDecoration="underline";
+                col1.style.textDecoration="none";
+                col2.style.textDecoration="none";
+            }
+
+            if(column==1) {
+                col1.style.textDecoration="underline";
+                col0.style.textDecoration="none";
+                col2.style.textDecoration="none";
+            }
+
+            if(column==2) {
+                col2.style.textDecoration="underline";
+                col1.style.textDecoration="none";
+                col0.style.textDecoration="none";
+            }
+
             var theader = document.getElementById("theader");
-            var oldOrder = theader.cells[column].dataset.order || '1';
-            oldOrder = parseInt(oldOrder, 10)
-            var newOrder = 0 - oldOrder;
+            var oldOrder = theader.cells[column].dataset.order || '0';
+            oldOrder = parseInt(oldOrder, 10);
+            var newOrder = 1 - oldOrder;
             theader.cells[column].dataset.order = newOrder;
 
             var tbody = document.getElementById("tbody");
             var rows = tbody.rows;
-            var list = [], i;
+            var listFiles = [], listDirs=[], i;
             for (i = 0; i < rows.length; i++) {
-                list.push(rows[i]);
+                //console.log(">>>"+rows[i].innerText);
+                //console.log("index="+ rows[i].innerText.lastIndexOf('/'));
+                //console.log("len-1="+ rows[i].innerText.length-1);
+                if(rows[i].innerText.lastIndexOf('/')!=-1)
+                    listDirs.push(rows[i]);
+                else
+                    listFiles.push(rows[i]);
             }
 
-            list.sort(function (row1, row2) {
+            //console.log(listDirs);
+            //console.log(listFiles);
+
+
+            listFiles.sort(function (row1, row2) {
+                var a = row1.cells[column].dataset.value;
+                var b = row2.cells[column].dataset.value;
+
+                console.log(a+" "+b);
+
+                if (column) {
+                    a = parseInt(a, 10);
+                    b = parseInt(b, 10);
+                    return a > b ? newOrder : a < b ? oldOrder : 0;
+                }
+                // Column 0 is text.
+                else {
+                    a=a.toLowerCase();
+                    b=b.toLowerCase();
+                    return a > b ? newOrder : a < b ? oldOrder : 0;
+                }
+
+
+                // Also the parent directory should always be sorted at one of the ends.
+                if (b == ".." | a > b) {
+                    return newOrder;
+                } else if (a == ".." | a < b) {
+                    return oldOrder;
+                } else {
+                    return 0;
+                }
+            });
+
+            listDirs.sort(function (row1, row2) {
                 var a = row1.cells[column].dataset.value;
                 var b = row2.cells[column].dataset.value;
                 if (column) {
                     a = parseInt(a, 10);
                     b = parseInt(b, 10);
+                    return a > b ? newOrder : a < b ? oldOrder : 0;
+                }
+                else {
+                    a=a.toLowerCase();
+                    b=b.toLowerCase();
                     return a > b ? newOrder : a < b ? oldOrder : 0;
                 }
 
@@ -242,8 +309,11 @@
             });
 
             // Appending an existing child again just moves it.
-            for (i = 0; i < list.length; i++) {
-                tbody.appendChild(list[i]);
+            for (i = 0; i < listDirs.length; i++) {
+                tbody.appendChild(listDirs[i]);
+            }
+            for (i = 0; i < listFiles.length; i++) {
+                tbody.appendChild(listFiles[i]);
             }
         }
 
@@ -376,8 +446,9 @@
             color: #676767;
         }
 
-        th div:hover {
-            cursor: hand;
+        #col0:hover, #col1:hover, #col2:hover {
+            cursor: pointer;
+            background-color:#f5f5f5;
         }
 
         tbody tr:hover{
@@ -490,9 +561,9 @@
                         <table>
                             <thead>
                                 <tr class="header" id="theader">
-                                    <th class="detailsColumn" onclick="javascript:sortTable(0);"><div>Name</div></th>
-                                    <th class="detailsColumn" onclick="javascript:sortTable(1);"><div>File Size</div></th>
-                                    <th class="detailsColumn" onclick="javascript:sortTable(2);"><div>Modified</div></th>
+                                    <th id="col0" class="detailsColumn" onclick="javascript:sortTable(0);">Name</th>
+                                    <th id="col1" class="detailsColumn" onclick="javascript:sortTable(1);">File Size</th>
+                                    <th id="col2" class="detailsColumn" onclick="javascript:sortTable(2);">Modified</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody" class="files">
@@ -606,9 +677,6 @@
     //this should be posted
     <!--start("data/user");-->
     start("");
-
-    //display username
-    display_user("meha");
 
 </script>
 
@@ -953,5 +1021,13 @@
 
 
 </body>
+
+<script>
+    //display username
+    display_user("meha");
+
+    //sort
+    sortTable(0);
+</script>
 
 </html>

@@ -275,11 +275,11 @@ namespace Overdrive {
 
 				username = roll + "_" + batch;
 
-				root = "/" + username + "/";
+				root = "/users/" + username + "/";
 
 				FILE *fp = fopen("mapping.txt", "a");
 
-				fprintf(fp, "%s %s /%s/ %s\n", username.c_str(), password.c_str(), username.c_str(), name.c_str());
+				fprintf(fp, "%s %s %s %s\n", username.c_str(), password.c_str(), root.c_str(), name.c_str());
 				fclose(fp);
 
 				std::string sessionID = std::string(username) + std::string(password);
@@ -291,7 +291,7 @@ namespace Overdrive {
 
 				response.addCookie(Poco::Net::HTTPCookie(sessionID, root));
 
-				Poco::File file(username);
+				Poco::File file(root.substr(1,root.length()-1));	//take out the starting and ending "/"
 				file.createDirectory();
 			}
 			response.redirect("/");

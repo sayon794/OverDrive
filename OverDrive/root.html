@@ -76,9 +76,6 @@
         }
 
     </script>
-
-
-
     <script>
 
         var root;
@@ -261,6 +258,15 @@
         }
 
     </script>
+    <script>
+
+        var username = "";
+
+        function display_user(str) {
+            username = str;
+            document.getElementById("username_block").innerText = "Welcome, "+username+"!";
+        }
+    </script>
 
     <style>
 
@@ -426,7 +432,7 @@
                         <div class="top-menu">
                             <ul class="nav navbar-nav pull-right">
                                 <li>
-                                    <a href="">Welcome, tausif!</a>
+                                    <a id="username_block" href="">Welcome, user!</a>
                                 </li>
                                 <li>
                                     <a href="/logout">Logout</a>
@@ -600,6 +606,10 @@
     //this should be posted
     <!--start("data/user");-->
     start("");
+
+    //display username
+    display_user("meha");
+
 </script>
 
 

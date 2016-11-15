@@ -41,7 +41,13 @@ namespace Net {
 			if(!loggedIn) return new LoginRequestHandler;
 			else return new redirectToRootHandler(rootAdd);
 		}*/
+
 		
+		std::string name = "." + rootAdd + uri.getPath();		//create the relative path
+		
+		Poco::File file(name);
+
+		if (!file.exists()) return new redirectToError();
 
 		if (requestURI.length() == 0 || requestURI[requestURI.length() - 1] == '/') {
 			return new DirectoryHandler(rootAdd);

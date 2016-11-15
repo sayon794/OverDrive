@@ -265,7 +265,7 @@
     <style>
 
         .underlined_title {
-            width: 20%;
+            width: 100%;
             padding-bottom: 3px;
             border-bottom: 1px solid #ddd;
             color: #1c699f;
@@ -495,22 +495,32 @@
                         </table>
 
 
-                        <h5 class="underlined_title">Upload</h5>
-                        <form method="POST" enctype="multipart/form-data">
-                            <input type="file" name="file">
-                            <input type="submit" value="Upload">
-                        </form>
+                        <div class="sided" style="width: 20%; margin-left: 20px">
+                            <h5 class="underlined_title">Upload</h5>
+                            <form method="POST" enctype="multipart/form-data">
+                                <input id="file_picked" type="file" name="file">
+                                <input id="up_btn" onclick="check_for_file(event)" style="margin-top: 8px" class="btn grey btn-block" type="submit" value="Upload">
+                            </form>
+
+                            <script>
+                                function check_for_file(e) {
+                                    console.log(e);
+                                    if(document.getElementById("file_picked").value == "") {
+                                        e.preventDefault();
+                                        window.alert("Select a file to upload -_-");
+                                    }
+                                }
+                            </script>
+
+                            <h5 class="underlined_title">or</h5>
+                            <button class="btn grey btn-block" onclick="dispatcher()">Add a new folder</button>
+                            <br>
+                            <br>
 
 
-
-                        <h5 class="underlined_title">or</h5>
-                        <button onclick="dispatcher()">Add a new folder</button>
-                        <br>
-                        <br>
-
-
-                        <h5 class="underlined_title">Tips</h5>
-                        <h5>Right click on files for more options!</h5>
+                            <h5 class="underlined_title">Tips</h5>
+                            <h5>Right click on files for more options!</h5>
+                        </div>
 
                         <script>
                             function dispatcher() {

@@ -16,7 +16,7 @@ Overdrive::Filesystem::DirectoryZipper::DirectoryZipper(Poco::URI& uri, Poco::Ne
 		std::cout << "Directory Name " << directoryName << std::endl;	//Ziptest 
 	}
 
-	std::string path = "." + root + "/"+directoryName;		//create the relative path
+	std::string path = "." + root +directoryName;		//create the relative path
 	//std::cout << "Path "<< path << std::endl;				// ./52/ZipTest
 
 	std::ofstream outZip(path+".zip", std::ios::binary);	//Name of The Zip
@@ -31,16 +31,11 @@ Overdrive::Filesystem::DirectoryZipper::DirectoryZipper(Poco::URI& uri, Poco::Ne
 	c.close(); // MUST be done to finalize the Zip file
 	outZip.flush();
 	outZip.close();
-	//std::cout << "should send file " << path << ".zip" << std::endl;
-	//response.sendFile(path + ".zip", "application/zip");	
-	//std::cout << "Finished Zipping " << std::endl;
 
-	response.setContentType("Binary Data");
-	std::ostream& ostr = response.send();
-	Poco::FileInputStream istr(path + ".zip");
-	Poco::StreamCopier::copyStream(istr, ostr);
+	response.set("Content-Disposition", "attachment; filename=\"" + insideZip + ".zip" + "\"");
+	response.sendFile(path + ".zip", "application/zip");
 
-	//Poco::File file(path + ".zip");
-	//file.remove();
+	Poco::File file(path + ".zip");
+	file.remove();
 
 }

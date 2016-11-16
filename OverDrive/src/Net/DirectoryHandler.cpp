@@ -47,8 +47,7 @@ namespace Overdrive {
 			}
 			else if (uri.getQuery().find("download") != std::string::npos)
 			{
-				new Overdrive::Filesystem::DirectoryZipper(uri,request,root,response);
-				return;
+				filestrat = new Overdrive::Filesystem::DirectoryZipper();
 			}
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader(username);

@@ -7,7 +7,7 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/FileStream.h>
 
-Overdrive::Filesystem::DirectoryZipper::DirectoryZipper(Poco::URI& uri, Poco::Net::HTTPServerRequest& request,std::string &root, Poco::Net::HTTPServerResponse& response) {
+void Overdrive::Filesystem::DirectoryZipper::handle(Poco::URI& uri, std::string &root, Poco::Net::HTTPServerResponse& response) {
 	std::string directoryName = uri.getPath();
 	if (directoryName[directoryName.length() - 1] == '/')
 	{
@@ -16,24 +16,25 @@ Overdrive::Filesystem::DirectoryZipper::DirectoryZipper(Poco::URI& uri, Poco::Ne
 		std::cout << "Directory Name " << directoryName << std::endl;	//Ziptest 
 	}
 
-	std::string path = "." + root +directoryName;		//create the relative path
-	//std::cout << "Path "<< path << std::endl;				// ./52/ZipTest
+	std::string path = "." + root + "/" + directoryName;		//create the relative path
+	std::cout << "Path "<< path << std::endl;				// ./52/ZipTest
 
-	std::ofstream outZip(path+".zip", std::ios::binary);	//Name of The Zip
-	Poco::Zip::Compress c(outZip,true);
-	Poco::Path data(path);
+	std::ofstream outZip(path + ".zip", std::ios::binary);	//Name of The Zip
+	Poco::Zip::Compress c(outZip, true);
+	Poco::Path data(path + "/");
 	data.makeDirectory();
-	//std::cout << "Made Directory " << std::endl;
 
-	std::string insideZip = directoryName.substr(directoryName.find_last_of('/') + 1,directoryName.length());
 
-	c.addRecursive(data, Poco::Zip::ZipCommon::CL_NORMAL,true, insideZip);
+	std::string insideZip = directoryName.substr(directoryName.find_last_of('/') + 1, directoryName.length());
+
+	c.addRecursive(data, Poco::Zip::ZipCommon::CL_NORMAL, true, insideZip);
 	c.close(); // MUST be done to finalize the Zip file
 	outZip.flush();
 	outZip.close();
-
 	response.set("Content-Disposition", "attachment; filename=\"" + insideZip + ".zip" + "\"");
 	response.sendFile(path + ".zip", "application/zip");
+
+	std::cout << "After Zipping  " << insideZip << std::endl;
 
 	Poco::File file(path + ".zip");
 	file.remove();

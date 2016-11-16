@@ -12,15 +12,17 @@ namespace Net {
 		//std::cout << "requested URI " << requestURI << std::endl;
 
 		///Add different handlers for different URI
-		//if (requestURI == "/")
-		if (requestURI.find("/img/") != std::string::npos) {
-			return new generalResourceHandler();
-		}
-		if (requestURI.find(".html") != std::string::npos) {
-			return new generalResourceHandler();
-		}
-		if (requestURI.find("/css/") != std::string::npos) {
-			return new CSSHandler();
+		
+		if (uri.getQuery() == "res") {
+			if (requestURI.find("/img/") != std::string::npos) {
+				return new generalResourceHandler();
+			}
+			if (requestURI.find(".html") != std::string::npos) {
+				return new generalResourceHandler();
+			}
+			if (requestURI.find("/css/") != std::string::npos) {
+				return new CSSHandler();
+			}
 		}
 		
 		bool loggedIn = CheckLoggedInStatus(request);

@@ -45,8 +45,8 @@ namespace Overdrive {
 			std::ostream& ostr = response.send();
 
 			char req[100];
-
-			strcpy(req, request.getURI().c_str());
+			Poco::URI uri(request.getURI());
+			strcpy(req, uri.getPath().c_str());
 			Poco::FileInputStream istr(req + 1);
 			Poco::StreamCopier::copyStream(istr, ostr);
 		}

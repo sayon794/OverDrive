@@ -2,4 +2,3 @@
 18_20 12345 /users/18_20/ Sayontan Chowdhury
 
 08_20 12345 /users/08_20/ Fahim Arefin
-281852_20 overkill /users/281852_20/ overkill

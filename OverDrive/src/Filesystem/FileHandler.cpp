@@ -5,6 +5,7 @@
 #include "Filesystem/FileDelete.hpp"
 #include "Filesystem/FileRename.hpp"
 #include "Filesystem/AddFolder.hpp"
+#include "Filesystem/FileMapper.hpp"
 #include "Net\Handlers.hpp"
 
 #include "Poco/URI.h"
@@ -38,6 +39,10 @@ namespace Overdrive {
 				filestrat = new Overdrive::Filesystem::FileDelete();
 			else if (uri.getQuery().find("rename") != std::string::npos)
 				filestrat = new Overdrive::Filesystem::FileRename();
+			else if (uri.getQuery().find("map") != std::string::npos)
+			{
+				filestrat = new Overdrive::Filesystem::FileMapper();
+			}
 			else /*if (uri.getQuery().find("download") != std::string::npos)*/
 			{
 				//std::cout << uri.getPath() << " " << uri.getQuery() << " New Download" << std::endl;

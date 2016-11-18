@@ -25,6 +25,7 @@
     <ClCompile Include="src\Filesystem\FileBrowser.cpp" />
     <ClCompile Include="src\Filesystem\FileDelete.cpp" />
     <ClCompile Include="src\Filesystem\FileHandler.cpp" />
+    <ClCompile Include="src\Filesystem\FileMapper.cpp" />
     <ClCompile Include="src\Filesystem\FileRename.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Net\DirectoryHandler.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="src\Net\OverdriveRequestHandlerFactory.cpp" />
     <ClCompile Include="src\Net\OverdriveServer.cpp" />
     <ClCompile Include="src\Net\RootHandler.cpp" />
+    <ClCompile Include="src\Net\SharedRequestHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Filesystem\AddFolder.hpp" />
@@ -41,12 +43,14 @@
     <ClInclude Include="src\Filesystem\FileHandler.hpp" />
     <ClInclude Include="src\Filesystem\FileHandlerStrategy.hpp" />
     <ClInclude Include="src\Filesystem\FileBrowser.hpp" />
+    <ClInclude Include="src\Filesystem\FileMapper.hpp" />
     <ClInclude Include="src\Filesystem\FileRename.hpp" />
     <ClInclude Include="src\Net\DirectoryHandler.hpp" />
     <ClInclude Include="src\Net\OverdriveRequestHandlerFactory.hpp" />
     <ClInclude Include="src\Net\OverdriveServer.hpp" />
     <ClInclude Include="src\Net\RootHandler.hpp" />
     <ClInclude Include="src\Net\Handlers.hpp" />
+    <ClInclude Include="src\Net\SharedRequestHandler.hpp" />
     <ClInclude Include="src\Net\StatePattern.hpp" />
     <ClInclude Include="src\Net\UserIDMapper.hpp" />
   </ItemGroup>

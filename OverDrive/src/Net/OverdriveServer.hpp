@@ -10,6 +10,8 @@
 #include "Poco/Util/HelpFormatter.h"
 #include "OverdriveRequestHandlerFactory.hpp"
 #include "UserIDMapper.hpp"
+#include <cstdlib>
+#include <ctime>
 
 
 namespace Overdrive {
@@ -17,7 +19,7 @@ namespace Net {
 	class OverdriveServer : public Poco::Util::ServerApplication {
 		static OverdriveServer *server;
 		
-		OverdriveServer() {};
+		OverdriveServer() { std::srand(std::time(NULL));  };
 		
 		OverdriveServer(const OverdriveServer&) = delete;
 		OverdriveServer operator=(const OverdriveServer&) = delete;

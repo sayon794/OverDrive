@@ -24,6 +24,10 @@ namespace Net {
 				return new CSSHandler();
 			}
 		}
+
+		if (uri.getQuery() == "share") {
+			return new SharedRequestHandler();
+		}
 		
 		bool loggedIn = CheckLoggedInStatus(request);
 
@@ -65,7 +69,7 @@ namespace Net {
 		}
 
 		if (requestURI.length() > 1) {
-			return new FileHandler(rootAdd);
+			return new FileHandler(rootAdd,&sharelinks);
 		}
 
 		//if (CheckLoggedInStatus(request)) {

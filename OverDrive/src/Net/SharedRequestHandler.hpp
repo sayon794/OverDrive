@@ -8,7 +8,7 @@ namespace Overdrive {
 	namespace Net {
 		class SharedRequestHandler : public Poco::Net::HTTPRequestHandler {
 		public:
-			SharedRequestHandler(const std::string &_root, const std::string &_name) : path(_root) {}
+			SharedRequestHandler(const std::string &_root) : path(_root) {}
 
 			void handleRequest(Poco::Net::HTTPServerRequest &request, Poco::Net::HTTPServerResponse &response);
 

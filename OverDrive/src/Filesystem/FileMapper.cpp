@@ -17,7 +17,7 @@ void Overdrive::Filesystem::FileMapper::handle(Poco::URI & uri, std::string & ro
 	}
 	(*sharelinks)[key] = name;
 	std::ostream& ostr = response.send();
-	ostr << key;
+	ostr << "?share=" << key;
 }
 
 std::string Overdrive::Filesystem::FileMapper::randstring() {

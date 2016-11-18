@@ -25,8 +25,12 @@ namespace Net {
 			}
 		}
 
-		if (uri.getQuery() == "share") {
-			return new SharedRequestHandler();
+		if (uri.getQuery().find("share") != std::string::npos) {
+			std::string str = uri.getQuery().substr(uri.getQuery().find_first_of('='), uri.getQuery().length());
+			if (sharelinks.find(str) != sharelinks.end())
+				return new SharedRequestHandler(sharelinks[str]);
+			else
+				return new redirectToError();
 		}
 		
 		bool loggedIn = CheckLoggedInStatus(request);

@@ -2,6 +2,7 @@
 #include "Poco/Net/HTTPServerRequest.h"
 #include "Poco/Net/HTTPServerResponse.h"
 #include <string>
+#include <map>
 
 namespace Overdrive {
 	namespace Net {

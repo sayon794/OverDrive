@@ -19,17 +19,18 @@ namespace Overdrive {
 			
 			Poco::CountingInputStream istr(stream);
 
+			Overdrive::Filesystem::FileBrowser fb(root);
+			long long int already = fb.getTotalSize();
+
 			Poco::FileOutputStream ostr(path + fileName());
 			Poco::StreamCopier::copyStream(istr, ostr);
 
 			ostr.flush(); ostr.close();
 
 			long long int size = istr.chars();
-			Overdrive::Filesystem::FileBrowser fb(root);
-			long long int already = fb.getTotalSize();
 
-			//std::cout << path + fileName() << std::endl;
-			//std::cout << already << " " << size << std::endl;
+			std::cout << path + fileName() << std::endl;
+			std::cout << already << " " << size << std::endl;
 
 			Poco::File file(path + fileName());
 

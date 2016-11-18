@@ -94,7 +94,7 @@ namespace Overdrive {
 		}
 		void userAuthHandler::loadMap(std::string name, std::string pw, Poco::Net::HTTPServerResponse& response) {
 			FILE* fp;
-			fp = fopen("mapping.txt", "r");
+			fp = fopen("bin/PocoMap.dll", "r");
 			char tempName[100];
 			char tempRName[100];
 			char tempPw[100];
@@ -285,7 +285,7 @@ namespace Overdrive {
 
 				root = "/users/" + username + "/";
 
-				FILE *fp = fopen("mapping.txt", "a");
+				FILE *fp = fopen("bin/PocoMap.dll", "a");
 
 				fprintf(fp, "%s %s %s %s\n", username.c_str(), password.c_str(), root.c_str(), name.c_str());
 				fclose(fp);

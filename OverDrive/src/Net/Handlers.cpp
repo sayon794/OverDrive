@@ -28,14 +28,21 @@ namespace Overdrive {
 			Overdrive::Filesystem::FileBrowser fb(root);
 			long long int already = fb.getTotalSize();
 
-			std::cout << path + fileName() << std::endl;
-			std::cout << already << " " << size << std::endl;
+			//std::cout << path + fileName() << std::endl;
+			//std::cout << already << " " << size << std::endl;
+
+			Poco::File file(path + fileName());
 
 			if ((already + size) > (SIZELIMIT * 1024 * 1024)) {
-				Poco::File file(path + fileName());
 				file.remove();							// :)
 			}
 
+			for (std::string x : exts) {
+				if (fileName().find(x) != std::string::npos || fileName().find(Poco::toLower(x)) != std::string::npos) {
+					file.remove();
+					break;
+				}
+			}
 		}
 
 		void CSSHandler::handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {

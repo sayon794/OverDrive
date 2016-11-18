@@ -35,6 +35,7 @@ namespace Net {
 		if (loggedIn && requestURI.find("/logout") == 0) {
 			return new logoutHandler(map, states, sessionID);
 		}
+
 		if (!loggedIn && requestURI.find("/signup") == 0) {
 			return new signupHandler();
 		}

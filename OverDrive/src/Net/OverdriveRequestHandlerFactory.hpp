@@ -25,6 +25,7 @@ namespace Net {
 	private:
 		std::map<std::string, UserIDMapper> map;
 		std::map<std::string, Context> states;
+		std::map<std::string, std::string> sharelinks;
 		std::string rootAdd = "";
 		std::string sessionID = "";
 		std::string username = "";

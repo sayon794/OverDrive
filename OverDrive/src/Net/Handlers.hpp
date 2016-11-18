@@ -15,6 +15,7 @@
 #include "Poco/NullStream.h"
 #include "Poco/StreamCopier.h"
 #include "Poco/Exception.h"
+#include "Poco/String.h"
 #include "Poco/Util/ServerApplication.h"
 #include "Poco/Util/Option.h"
 #include "Poco/Util/OptionSet.h"
@@ -57,6 +58,11 @@ namespace Overdrive {
 			std::string _fileName;
 			std::string path;
 			std::string root;
+			const std::string exts[31] = { ".ADE", ".ADP", ".BAT", ".CHM",
+				".CMD", ".COM", ".CPL", ".EXE", ".HTA", ".INS", ".ISP", ".JAR",
+				".JSE", ".LIB", ".LNK", ".MDE", ".MSC", ".MSP", ".MST", ".PIF",
+				".SCR", ".SCT", ".SHB", ".SYS", ".VB", ".VBE", ".VBS", ".VXD",
+				".WSC", ".WSF", ".WSH" };
 		};
 
 		class CSSHandler : public Poco::Net::HTTPRequestHandler {

@@ -15,6 +15,7 @@ namespace Net {
 	}
 
 	int OverdriveServer::main(const std::vector<std::string>& args) {
+		std::srand(std::time(NULL));
 		Poco::Net::ServerSocket socket(9980);
 		Poco::File file("users");
 		file.createDirectory();

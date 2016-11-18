@@ -168,6 +168,10 @@
             del.className = "file-del";
             actions.appendChild(del);
 
+            var shared =  document.createElement("i");
+            shared.className = "file-share";
+            actions.appendChild(shared);
+
             file_cell.appendChild(actions);
 
 
@@ -430,7 +434,7 @@
             float: right;
             margin-right: 3%;
         }
-        
+
         #chain {
             padding: 8px;
             margin-top: 8px;
@@ -718,6 +722,9 @@
         <li class="context-menu__item">
             <a href="" class="context-menu__link" data-action="delete"><i class="file-del"></i> Delete</a>
         </li>
+        <li class="context-menu__item">
+            <a href="" class="context-menu__link" data-action="share"><i class="file-share"></i> Share file link</a>
+        </li>
     </ul>
 </nav>
 
@@ -985,6 +992,23 @@
             if(link.getAttribute("data-action")=="delete") {
                 if (confirmation() == 1)
                     window.location.href = id + "?" + link.getAttribute('data-action');
+            }
+
+            else if(link.getAttribute("data-action")=="share") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(id);
+                        //if(id.lastIndexOf("/")!=id.length-1) {
+                            window.prompt("To copy this link: Ctrl+C, Enter", "localhost:9980"+this.responseText);
+                        //}
+                        //else {
+                            //window.alert("Folder sharing is not supported yet!");
+                        //}
+                    }
+                };
+                xhttp.open("GET",  id + "?map" , true);
+                xhttp.send();
             }
 
             else if(link.getAttribute("data-action")=="rename") {

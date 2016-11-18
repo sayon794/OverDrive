@@ -19,7 +19,7 @@ namespace Net {
 	class OverdriveServer : public Poco::Util::ServerApplication {
 		static OverdriveServer *server;
 		
-		OverdriveServer() { std::srand(std::time(NULL));  };
+		OverdriveServer() {}
 		
 		OverdriveServer(const OverdriveServer&) = delete;
 		OverdriveServer operator=(const OverdriveServer&) = delete;

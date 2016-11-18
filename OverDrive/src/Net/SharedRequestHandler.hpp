@@ -2,6 +2,7 @@
 #include "Poco/Net/HTTPServerRequest.h"
 #include "Poco/Net/HTTPServerResponse.h"
 #include "Net/Handlers.hpp"
+#include "Filesystem/DirectoryZipper.hpp"
 #include <iostream>
 
 namespace Overdrive {

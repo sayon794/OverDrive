@@ -2,7 +2,7 @@
 
 void Overdrive::Filesystem::FileMapper::handle(Poco::URI & uri, std::string & root, Poco::Net::HTTPServerResponse & response) {
 	std::string tempPath = uri.getPath();
-	if (tempPath[tempPath.length() - 1] == '/') tempPath.erase(tempPath.length() - 1, 1);	// a '/' was added to the end of directories, get rid of that
+	//if (tempPath[tempPath.length() - 1] == '/') tempPath.erase(tempPath.length() - 1, 1);	// a '/' was added to the end of directories, get rid of that
 	std::string name = "." + root + tempPath;		//create the relative path
 													//std::cout << name << std::endl;
 	if (sharelinks->size() > 500)

@@ -49,6 +49,10 @@ namespace Overdrive {
 			{
 				filestrat = new Overdrive::Filesystem::DirectoryZipper();
 			}
+			else if (uri.getQuery().find("map") != std::string::npos)
+			{
+				filestrat = new Overdrive::Filesystem::FileMapper(sharelinks);
+			}
 			else
 				filestrat = new Overdrive::Filesystem::DirectoryLoader(username);
 

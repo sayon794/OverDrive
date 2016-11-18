@@ -69,7 +69,7 @@ namespace Net {
 		if (!file.exists()) return new redirectToError();
 
 		if (requestURI.length() == 0 || requestURI[requestURI.length() - 1] == '/') {
-			return new DirectoryHandler(rootAdd,username);
+			return new DirectoryHandler(rootAdd,username,&sharelinks);
 		}
 
 		if (requestURI.length() > 1) {

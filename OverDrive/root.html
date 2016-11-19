@@ -864,12 +864,14 @@
 
                         var slash = fileItemInContext.href.lastIndexOf("/");
                         var fileName = fileItemInContext.href.substr(slash+1);
+                        fileName = fileName.split("%20").join(" ");
                         console.log(fileName);
 
                         fileItemInContext.setAttribute("download", fileName);
                         console.log("dl: " + fileItemInContext.href);
 
                         fileItemInContext.click();
+
                     }
 
                     else {
@@ -981,6 +983,7 @@
                 //
                 var slash = fileItemInContext.href.lastIndexOf("/");
                 id = fileItemInContext.href.substr(slash+1);
+                id = id.split("%20").join(" ");
                 //id += "/" ;
 
                 console.log( "File ID - " + id + ", File action - " + link.getAttribute("data-action"));
@@ -1069,10 +1072,10 @@
     // sayon, comment out display_storage() and display_user()
 
     //storage ->in MB!!
-    <!--display_storage(20.5959595, 100);-->
+    //display_storage(20.5959595, 100);
 
     //display username
-    <!--display_user("meha");-->
+    //display_user("meha");
 
 
     // dont touch this
